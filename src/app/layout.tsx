@@ -20,10 +20,12 @@ export default function RootLayout({
     <html lang='ko'>
       <body className={sans.className}>
         <AuthContext>
-          <header>
-            <Header />
+          <header className='border-b'>
+            <div className='max-w-screen-xl mx-auto'>
+              <Header />
+            </div>
           </header>
-          <main>{children}</main>
+          <main className='max-w-screen-xl mx-auto'>{children}</main>
         </AuthContext>
       </body>
     </html>
