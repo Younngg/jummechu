@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 import './globals.css';
+import AuthContext from '@/context/AuthContext';
+import Header from '@/components/Header';
 
 const sans = Open_Sans({ subsets: ['latin'] });
 
@@ -15,10 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang='ko'>
       <body className={sans.className}>
-        <header></header>
-        <main>{children}</main>
+        <AuthContext>
+          <header>
+            <Header />
+          </header>
+          <main>{children}</main>
+        </AuthContext>
       </body>
     </html>
   );
