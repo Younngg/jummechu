@@ -19,9 +19,7 @@ export const getPartiesOfUserId = async (userId: string) => {
 
 export const getParty = async (partyId: string) => {
   return client.fetch(`*[_type == "party" && _id == "${partyId}"]{
-    _id,
-    _updatedAt,
-    name,
+    ${simpleProjection},
     createdBy->{name, email, image, "id":_id},
     "voting": *[_type == "voting" && party._ref match "${partyId}"]{
       ${simpleProjection},

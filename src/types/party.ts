@@ -6,10 +6,13 @@ export type InitParty = {
   users: AuthUser[];
 };
 
-export type PartyDetail = {
+export type SimpleParty = {
   id: string;
   updateAt: string;
   name: string;
+};
+
+export type PartyDetail = SimpleParty & {
   createdBy: SimpleUser;
   voting: Voting[];
 };
