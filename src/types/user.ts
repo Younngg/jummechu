@@ -1,7 +1,10 @@
-export type AuthUser = {
+export type SimpleUser = {
   name: string;
-  username: string;
   email: string;
   image?: string;
   id: string;
+};
+
+export type AuthUser = SimpleUser & {
+  username: string;
 };
