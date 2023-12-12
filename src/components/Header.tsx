@@ -7,13 +7,20 @@ const Header = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
+  console.log(user);
+
   return (
     <div className='mx-auto flex justify-between items-center px-6 py-3 gap-4'>
       <h1 className='text-3xl font-bold'>
         <Link href='/'>점메추</Link>
       </h1>
-
-      <nav></nav>
+      <nav>
+        <ul>
+          <li>
+            <Link href='/party/create'>파티 추가</Link>
+          </li>
+        </ul>
+      </nav>
       <div>
         {session ? (
           <button onClick={() => signOut()}>로그아웃</button>

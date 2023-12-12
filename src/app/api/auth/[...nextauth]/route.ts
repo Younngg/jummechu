@@ -1,3 +1,4 @@
+import { addUser } from '@/service/user';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -34,13 +35,13 @@ const authOptions: NextAuthOptions = {
         return false;
       }
 
-      // await addUser({
-      //   id,
-      //   name: name || '',
-      //   image,
-      //   email,
-      //   username: email?.split('@')[0],
-      // });
+      addUser({
+        id,
+        name: name || '',
+        image: image || '',
+        email,
+        username: email.split('@')[0],
+      });
 
       return true;
     },
