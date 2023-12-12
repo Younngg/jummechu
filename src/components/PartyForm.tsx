@@ -2,10 +2,6 @@
 
 import { FormEvent, useState } from 'react';
 
-type Props = {
-  createParty: (name: string) => Promise<any>;
-};
-
 const PartyForm = () => {
   const [name, setName] = useState('');
 
@@ -29,6 +25,7 @@ const PartyForm = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
+      <button>추가</button>
     </form>
   );
 };

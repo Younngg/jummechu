@@ -7,7 +7,6 @@ const Header = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  console.log(user);
 
   return (
     <div className='mx-auto flex justify-between items-center px-6 py-3 gap-4'>
