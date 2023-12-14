@@ -18,7 +18,7 @@ export const addFood = async (partyId: string, name: string) => {
       { autoGenerateArrayKeys: true }
     )
     .then((result) => {
-      console.log(result._id)
+      console.log(result._id);
       return client
         .patch(partyId)
         .setIfMissing({ foods: [] })
@@ -27,7 +27,8 @@ export const addFood = async (partyId: string, name: string) => {
             _ref: result._id,
             _type: 'reference',
           },
-        ]).commit({ autoGenerateArrayKeys: true });;
+        ])
+        .commit({ autoGenerateArrayKeys: true });
     });
 };
 
@@ -41,11 +42,11 @@ export const voteForFood = async (foodId: string, userId: string) => {
 
 export const getPartiesOfUserId = async (userId: string) => {
   return client.fetch(
-    `(*[_type == "party" && "${userId}" in foods[] -> voters[]._ref]{
-      ${simpleProjection}
-    } + *[_type == "party" && createdBy->_id == "${userId}"]{
-      ${simpleProjection}
-    }) | order(updatedAt desc)`
+    `*[_type == "party" && "${userId}" in foods[] -> voters[]._ref || _type == "party" && createdBy->_id == "${userId}"]{
+      ${simpleProjection},
+      createdBy->{email, "id":_id},
+      isClosed
+    } | order(updatedAt desc)`
   );
 };
 

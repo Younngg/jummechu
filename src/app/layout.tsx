@@ -21,11 +21,11 @@ export default function RootLayout({
       <body className={sans.className}>
         <AuthContext>
           <header className='border-b'>
-            <div className='max-w-screen-xl mx-auto'>
+            <div className='max-w-screen-md mx-auto'>
               <Header />
             </div>
           </header>
-          <main className='max-w-screen-xl mx-auto'>{children}</main>
+          <main className='max-w-screen-md mx-auto'>{children}</main>
         </AuthContext>
       </body>
     </html>

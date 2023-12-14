@@ -1,25 +1,27 @@
-import { AuthUser, SimpleUser } from './user';
+import { SimpleUser, User } from './user';
 
 export type InitParty = {
   name: string;
   createdBy: string;
-  users: AuthUser[];
+  users: User[];
 };
 
 export type SimpleParty = {
   id: string;
-  updateAt: string;
+  updatedAt: string;
   name: string;
+  createdBy: SimpleUser;
+  isClosed: boolean;
 };
 
 export type PartyDetail = SimpleParty & {
-  createdBy: SimpleUser;
+  createdBy: User;
   foods: Food[];
   isClosed: boolean;
 };
 
 export type Food = {
   name: string;
-  voters: Omit<SimpleUser[], 'id'>;
+  voters: Omit<User[], 'id'>;
   id: string;
 };

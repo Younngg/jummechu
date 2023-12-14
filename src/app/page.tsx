@@ -12,9 +12,9 @@ const Home = async () => {
   }
 
   return (
-    <h1>
+    <div>
       <PartyList />
-    </h1>
+    </div>
   );
 };
 
