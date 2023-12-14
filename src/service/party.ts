@@ -7,16 +7,12 @@ const simpleProjection = `
   "updatedAt":_updatedAt
 `;
 
-export const voteForFood = async (
-  partyId: string,
-  foodKey: string,
-  userId: string
-) => {
+export const voteForFood = async (foodId: string, userId: string) => {
   return client
-    .patch(partyId)
-    .append(`foods[]._key match ${foodKey}`, [
-      { _ref: userId, _type: 'reference' },
-    ]);
+    .patch(foodId)
+    .setIfMissing({ voters: [] })
+    .append(`voters`, [{ _ref: userId, _type: 'reference' }])
+    .commit({ autoGenerateArrayKeys: true });
 };
 
 export const getPartiesOfUserId = async (userId: string) => {
@@ -44,5 +40,6 @@ export const createParty = async (name: string, userId: string) => {
     _type: 'party',
     name,
     createdBy: { _ref: userId, _type: 'reference' },
+    foods: [],
   });
 };
