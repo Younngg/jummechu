@@ -14,19 +14,12 @@ export type SimpleParty = {
 
 export type PartyDetail = SimpleParty & {
   createdBy: SimpleUser;
-  voting: Voting[];
-};
-
-export type Voting = {
-  foods: VotingFoods[];
+  foods: Food[];
   isClosed: boolean;
-  updatedAt: any;
-  name: string;
-  id: string;
 };
 
-export type VotingFoods = {
+export type Food = {
   name: string;
-  voter: Omit<SimpleUser[], 'id'>;
-  key: string;
+  voters: Omit<SimpleUser[], 'id'>;
+  id: string;
 };

@@ -1,5 +1,5 @@
 import user from './user'
 import party from './party'
-import voting from './voting'
+import food from './food'
 
-export const schemaTypes = [user, party, voting]
+export const schemaTypes = [user, party, food]

@@ -15,7 +15,7 @@ const PartyList = () => {
       .then((data) => setParties(data));
   }, []);
 
-  console.log(parties);
+
 
   return (
     <section>

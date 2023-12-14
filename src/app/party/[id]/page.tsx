@@ -1,13 +1,15 @@
-import { getParty } from '@/service/party';
+import PartyDetail from '@/components/PartyDetail';
 
 type Props = { params: { id: string } };
 
-const PartyDetailPage = async ({ params: { id } }: Props) => {
-  const party = await getParty(id)
-
-  console.log(party)
-
-  return <h1>party</h1>;
+const PartyDetailPage = ({ params: { id } }: Props) => {
+  return (
+    <div>
+      <div>
+        <PartyDetail partyId={id} />
+      </div>
+    </div>
+  );
 };
 
 export default PartyDetailPage;

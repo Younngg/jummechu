@@ -14,5 +14,16 @@ export default {
       type: 'reference',
       to: [{type: 'user'}],
     },
+    {
+      title: 'Foods',
+      name: 'foods',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'food'}]}],
+    },
+    {
+      title: 'IsClosed',
+      name: 'isClosed',
+      type: 'boolean',
+    },
   ],
 }
