@@ -1,11 +1,26 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
-import { getParty } from '@/service/party';
+import { addFood, getParty } from '@/service/party';
 
 type Context = {
   params: { id: string };
 };
+
+export async function POST(req: NextRequest, context: Context) {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
+  if (!user) {
+    return new Response('Authentication Error', { status: 401 });
+  }
+
+  const { name } = await req.json();
+
+  return addFood(context.params.id, name).then((data) =>
+    NextResponse.json(data)
+  );
+}
 
 export async function GET(_: NextRequest, context: Context) {
   const session = await getServerSession(authOptions);

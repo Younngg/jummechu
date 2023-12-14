@@ -7,6 +7,30 @@ const simpleProjection = `
   "updatedAt":_updatedAt
 `;
 
+export const addFood = async (partyId: string, name: string) => {
+  return client
+    .create(
+      {
+        _type: 'food',
+        name,
+        voters: [],
+      },
+      { autoGenerateArrayKeys: true }
+    )
+    .then((result) => {
+      console.log(result._id)
+      return client
+        .patch(partyId)
+        .setIfMissing({ foods: [] })
+        .append('foods', [
+          {
+            _ref: result._id,
+            _type: 'reference',
+          },
+        ]).commit({ autoGenerateArrayKeys: true });;
+    });
+};
+
 export const voteForFood = async (foodId: string, userId: string) => {
   return client
     .patch(foodId)

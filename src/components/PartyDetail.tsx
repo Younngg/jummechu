@@ -25,7 +25,7 @@ const PartyDetail = ({ partyId }: Props) => {
     <div>
       <h1>{party.name}</h1>
       <div>
-        <Voting foods={party.foods} />
+        <Voting foods={party.foods}partyId={partyId} />
       </div>
     </div>
   );
