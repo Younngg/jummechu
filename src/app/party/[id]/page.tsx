@@ -5,9 +5,7 @@ type Props = { params: { id: string } };
 const PartyDetailPage = ({ params: { id } }: Props) => {
   return (
     <div>
-      <div>
-        <PartyDetail partyId={id} />
-      </div>
+      <PartyDetail partyId={id} />
     </div>
   );
 };

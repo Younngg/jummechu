@@ -3,6 +3,7 @@
 import { PartyDetail } from '@/types/party';
 import { useEffect, useState } from 'react';
 import Voting from './Voting';
+import VotingForm from './VotingForm';
 
 type Props = {
   partyId: string;
@@ -22,12 +23,15 @@ const PartyDetail = ({ partyId }: Props) => {
   }
 
   return (
-    <div>
-      <h1>{party.name}</h1>
+    <section className='px-3 py-6'>
       <div>
-        <Voting foods={party.foods}partyId={partyId} />
+        <h2 className='text-2xl font-bold'>{party.name}</h2>
       </div>
-    </div>
+      <div className='mt-8 flex flex-col gap-3'>
+        <Voting foods={party.foods} />
+        <VotingForm partyId={partyId} />
+      </div>
+    </section>
   );
 };
 
