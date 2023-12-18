@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
-import { createParty, getPartiesOfUserId } from '@/service/party';
+import { createParty, deleteFood, getPartiesOfUserId } from '@/service/party';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -11,7 +11,7 @@ export async function GET() {
     return new Response('Authentication Error', { status: 401 });
   }
 
-  return getPartiesOfUserId(user.id).then((data) => NextResponse.json(data));
+  return getPartiesOfUserId(user.id).then((res) => NextResponse.json(res));
 }
 
 export async function POST(req: NextRequest) {
@@ -24,5 +24,20 @@ export async function POST(req: NextRequest) {
 
   const { name } = await req.json();
 
-  return createParty(name, user.id).then((data) => NextResponse.json(data));
+  return createParty(name, user.id).then((res) => NextResponse.json(res));
+}
+
+export async function DELETE(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
+  if (!user) {
+    return new Response('Authentication Error', { status: 401 });
+  }
+
+  const { foodId, partyId } = await req.json();
+
+  return deleteFood(foodId, partyId)
+    .then((res) => NextResponse.json(res))
+    .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
 }

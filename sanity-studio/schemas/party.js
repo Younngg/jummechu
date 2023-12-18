@@ -25,5 +25,10 @@ export default {
       name: 'isClosed',
       type: 'boolean',
     },
+    {
+      title: 'CanBeAdded',
+      name: 'canBeAdded',
+      type: 'boolean',
+    },
   ],
 }

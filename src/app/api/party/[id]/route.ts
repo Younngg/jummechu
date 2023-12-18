@@ -17,9 +17,7 @@ export async function POST(req: NextRequest, context: Context) {
 
   const { name } = await req.json();
 
-  return addFood(context.params.id, name).then((data) =>
-    NextResponse.json(data)
-  );
+  return addFood(context.params.id, name).then((res) => NextResponse.json(res));
 }
 
 export async function GET(_: NextRequest, context: Context) {
@@ -30,5 +28,5 @@ export async function GET(_: NextRequest, context: Context) {
     return new Response('Authentication Error', { status: 401 });
   }
 
-  return getParty(context.params.id).then((data) => NextResponse.json(data));
+  return getParty(context.params.id).then((res) => NextResponse.json(res));
 }

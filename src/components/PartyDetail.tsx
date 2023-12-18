@@ -25,10 +25,10 @@ const PartyDetail = ({ partyId }: Props) => {
   return (
     <section className='px-3 py-6'>
       <div>
-        <h2 className='text-2xl font-bold'>{party.name}</h2>
+        <h2 className='text-2xl font-bold text-center'>{party.name}</h2>
       </div>
       <div className='mt-8 flex flex-col gap-3'>
-        <Voting foods={party.foods} />
+        <Voting party={party} />
         <VotingForm partyId={partyId} />
       </div>
     </section>

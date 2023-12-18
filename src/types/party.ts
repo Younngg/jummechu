@@ -18,6 +18,7 @@ export type PartyDetail = SimpleParty & {
   createdBy: User;
   foods: Food[];
   isClosed: boolean;
+  canBeAdded: boolean;
 };
 
 export type Food = {

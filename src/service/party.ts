@@ -7,6 +7,16 @@ const simpleProjection = `
   "updatedAt":_updatedAt
 `;
 
+export const deleteFood = async (foodId: string, partyId: string) => {
+  return client
+    .patch(partyId)
+    .unset([`foods[_ref=="${foodId}"]`])
+    .commit()
+    .then(() => {
+      return client.delete(foodId);
+    });
+};
+
 export const addFood = async (partyId: string, name: string) => {
   return client
     .create(
@@ -18,7 +28,6 @@ export const addFood = async (partyId: string, name: string) => {
       { autoGenerateArrayKeys: true }
     )
     .then((result) => {
-      console.log(result._id);
       return client
         .patch(partyId)
         .setIfMissing({ foods: [] })
