@@ -1,6 +1,7 @@
+import usePartyDetail from '@/hooks/party';
 import { Food } from '@/types/party';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import VoteToggleButton from './ui/VoteToggleButton';
 
 type Props = {
   food: Food;
@@ -13,44 +14,28 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const [isVoted, setIsVoted] = useState(false);
+  const { setVote } = usePartyDetail(partyId);
 
-  const checkVotedFood = () => {
-    if (user) {
-      const filtered = food.voters.find((voter) => voter.id === user.id);
+  const voted = user
+    ? food.voters.some((voter) => voter.id === user.id)
+    : false;
 
-      return filtered !== undefined;
-    }
-
-    return false;
-  };
-  console.log(checkVotedFood());
-
-  const onClickVote = (foodId: string) => {
-    setIsVoted(true);
-
-    fetch('/api/vote', {
-      method: 'PUT',
-      body: JSON.stringify({ foodId, vote: true }),
-    }).then((res) => res.json());
-  };
+  const handleVote = (vote: boolean) => setVote({ foodId: food.id, vote });
 
   const onClickDelete = (foodId: string) => {
-    fetch('/api/party', {
-      method: 'DELETE',
-      body: JSON.stringify({ foodId, partyId }),
-    });
+    setVote({ foodId, vote: false });
   };
+
   return (
     <div className='flex items-center gap-5'>
       {food.voters && <p>{food.voters.length}</p>}
-      <button
-        className={`bg-sky-100 px-2 py-1 rounded-md disabled:bg-gray-300`}
-        onClick={() => onClickVote(food.id)}
+      <VoteToggleButton
+        toggled={voted}
+        onToggle={handleVote}
+        onText='투표 취소'
+        offText='투표'
         disabled={disabled}
-      >
-        투표
-      </button>
+      />
       {canBeDeleted && (
         <button
           className={`bg-red-200 px-2 py-1 rounded-md disabled:bg-gray-300`}
