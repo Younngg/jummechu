@@ -5,6 +5,5 @@ export type SimpleUser = {
 
 export type User = SimpleUser & {
   name: string;
-  username: string;
   image?: string;
 };

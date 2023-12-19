@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
-import { voteForFood } from '@/service/party';
+import { cancleVoteForFood, voteForFood } from '@/service/sanity/party';
 
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -11,9 +11,11 @@ export async function PUT(req: NextRequest) {
     return new Response('Authentication Error', { status: 401 });
   }
 
-  const { foodId } = await req.json();
+  const { foodId, vote } = await req.json();
 
-  return voteForFood(foodId, user.id)
+  const request = vote ? voteForFood : cancleVoteForFood;
+
+  return request(foodId, user.id)
     .then((res) => NextResponse.json(res))
     .catch((err) => new Response(JSON.stringify(err), { status: 500 }));
 }

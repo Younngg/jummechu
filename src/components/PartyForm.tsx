@@ -1,17 +1,16 @@
 'use client';
 
+import useParties from '@/hooks/parties';
 import { FormEvent, useState } from 'react';
 
 const PartyForm = () => {
   const [name, setName] = useState('');
+  const { createParty } = useParties();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    fetch('/api/party', {
-      method: 'POST',
-      body: JSON.stringify({ name }),
-    }).then((res) => res.json());
+    createParty(name);
 
     setName('');
   };

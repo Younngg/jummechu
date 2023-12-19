@@ -21,7 +21,7 @@ const PartyCard = ({
     >
       <p>
         {name}
-        {createdBy.id === user.id && <span>👑</span>}
+        {createdBy.id === user?.id && <span>👑</span>}
       </p>
       <p>{updatedAt}</p>
     </Link>

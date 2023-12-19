@@ -41,6 +41,13 @@ export const addFood = async (partyId: string, name: string) => {
     });
 };
 
+export const cancleVoteForFood = async (foodId: string, userId: string) => {
+  return client
+    .patch(foodId)
+    .unset([`voters[_ref == "${userId}"]`])
+    .commit();
+};
+
 export const voteForFood = async (foodId: string, userId: string) => {
   return client
     .patch(foodId)
@@ -65,7 +72,7 @@ export const getParty = async (partyId: string): Promise<PartyDetail> => {
     "id":_id,
     "updatedAt":_updatedAt,
     createdBy->{name, email, image, "id":_id},
-    "foods":foods[]->{name,"id":_id, "voters":voters[]->{name,image,email}}
+    "foods":foods[]->{name,"id":_id, "voters":voters[]->{"id":_id,name,image,email}}
   }`);
 };
 

@@ -19,7 +19,10 @@ const Voting = ({ party: { id, foods, createdBy, isClosed } }: Props) => {
   };
 
   const checkCanBeDeleted = () => {
-    if (!isClosed && user.id === createdBy.id) return true;
+    if (user) {
+      if (!isClosed && user.id === createdBy.id) return true;
+    }
+
     return false;
   };
 

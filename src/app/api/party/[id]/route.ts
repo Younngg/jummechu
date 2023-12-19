@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
-import { addFood, getParty } from '@/service/party';
+import { addFood, getParty } from '@/service/sanity/party';
 
 type Context = {
   params: { id: string };

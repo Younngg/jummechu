@@ -1,22 +1,15 @@
 'use client';
 
-import { PartyDetail } from '@/types/party';
-import { useEffect, useState } from 'react';
 import Voting from './Voting';
 import VotingForm from './VotingForm';
+import usePartyDetail from '@/hooks/party';
 
 type Props = {
   partyId: string;
 };
 
 const PartyDetail = ({ partyId }: Props) => {
-  const [party, setParty] = useState<PartyDetail>();
-
-  useEffect(() => {
-    fetch(`/api/party/${partyId}`)
-      .then((res) => res.json())
-      .then((data) => setParty(data));
-  }, [partyId]);
+  const { party } = usePartyDetail(partyId);
 
   if (!party) {
     return <></>;

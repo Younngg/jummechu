@@ -3,6 +3,7 @@ import { Open_Sans } from 'next/font/google';
 import './globals.css';
 import AuthContext from '@/context/AuthContext';
 import Header from '@/components/Header';
+import QueryClientContext from '@/context/QueryClientContext';
 
 const sans = Open_Sans({ subsets: ['latin'] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
               <Header />
             </div>
           </header>
-          <main className='max-w-screen-md mx-auto'>{children}</main>
+          <main className='max-w-screen-md mx-auto'>
+            <QueryClientContext>{children}</QueryClientContext>
+          </main>
         </AuthContext>
       </body>
     </html>

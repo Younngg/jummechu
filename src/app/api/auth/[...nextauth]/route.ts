@@ -1,4 +1,4 @@
-import { addUser } from '@/service/user';
+import { addUser } from '@/service/sanity/user';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -18,7 +18,6 @@ const authOptions: NextAuthOptions = {
       if (user) {
         session.user = {
           ...user,
-          username: user.email?.split('@')[0] || '',
           id: token.id as string,
         };
       }
@@ -40,7 +39,6 @@ const authOptions: NextAuthOptions = {
         name: name || '',
         image: image || '',
         email,
-        username: email.split('@')[0],
       });
 
       return true;

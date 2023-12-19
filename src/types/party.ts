@@ -23,6 +23,6 @@ export type PartyDetail = SimpleParty & {
 
 export type Food = {
   name: string;
-  voters: Omit<User[], 'id'>;
+  voters: User[];
   id: string;
 };
