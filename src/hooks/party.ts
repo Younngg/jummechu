@@ -20,7 +20,20 @@ const usePartyDetail = (partyId: string) => {
       queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
   });
 
-  return { party, isError, isLoading, setVote };
+  const { mutate: addFood } = useMutation({
+    mutationFn: ({ name }: { name: string }) => partyApi.addFood(partyId, name),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
+  });
+
+  const { mutate: deleteFood } = useMutation({
+    mutationFn: ({ foodId }: { foodId: string }) =>
+      partyApi.deleteFood(partyId, foodId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
+  });
+
+  return { party, isError, isLoading, setVote, addFood, deleteFood };
 };
 
 export default usePartyDetail;

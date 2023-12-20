@@ -1,3 +1,4 @@
+import usePartyDetail from '@/hooks/party';
 import { FormEvent, useState } from 'react';
 
 type Props = {
@@ -5,16 +6,13 @@ type Props = {
 };
 
 const VotingForm = ({ partyId }: Props) => {
+  const { addFood } = usePartyDetail(partyId);
+
   const [name, setName] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    fetch(`/api/party/${partyId}`, {
-      method: 'POST',
-      body: JSON.stringify({ name }),
-    }).then((res) => res.json());
-
+    addFood({ name });
     setName('');
   };
 

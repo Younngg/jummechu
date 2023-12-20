@@ -14,7 +14,7 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { setVote } = usePartyDetail(partyId);
+  const { setVote, deleteFood } = usePartyDetail(partyId);
 
   const voted = user
     ? food.voters.some((voter) => voter.id === user.id)
@@ -22,9 +22,7 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
 
   const handleVote = (vote: boolean) => setVote({ foodId: food.id, vote });
 
-  const onClickDelete = (foodId: string) => {
-    setVote({ foodId, vote: false });
-  };
+  const onClickDelete = () => deleteFood({ foodId: food.id });
 
   return (
     <div className='flex items-center gap-5'>
@@ -39,7 +37,7 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
       {canBeDeleted && (
         <button
           className={`bg-red-200 px-2 py-1 rounded-md disabled:bg-gray-300`}
-          onClick={() => onClickDelete(food.id)}
+          onClick={onClickDelete}
         >
           삭제
         </button>

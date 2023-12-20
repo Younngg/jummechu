@@ -17,6 +17,18 @@ export const partyApi = {
       method: 'GET',
     }).then((res) => res.json());
   },
+  addFood: async (partyId: string, name: string) => {
+    return fetch(`/api/vote/${partyId}`, {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+    }).then((res) => res.json());
+  },
+  deleteFood: async (partyId: string, foodId: string) => {
+    return fetch(`/api/vote/${partyId}`, {
+      method: 'DELETE',
+      body: JSON.stringify({ foodId }),
+    }).then((res) => res.json());
+  },
   updateVote: async (foodId: string, vote: boolean) => {
     return fetch('/api/vote', {
       method: 'PUT',

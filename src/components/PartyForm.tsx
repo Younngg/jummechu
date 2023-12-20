@@ -9,9 +9,7 @@ const PartyForm = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     createParty(name);
-
     setName('');
   };
 
