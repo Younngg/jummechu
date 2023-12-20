@@ -31,4 +31,7 @@ export default {
       type: 'boolean',
     },
   ],
+  initialValue: {
+    isClosed: false,
+  },
 }

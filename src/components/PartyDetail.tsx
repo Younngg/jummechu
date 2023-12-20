@@ -27,6 +27,7 @@ const PartyDetail = ({ partyId }: Props) => {
 
     return false;
   };
+  console.log(party);
 
   const onClickVotingCloses = () => updatePartyClosed({ isClosed: true });
 

@@ -22,6 +22,8 @@ const Voting = ({
     return voters.find((voter) => voter.email === user?.email) ? true : false;
   };
 
+
+
   return (
     <div>
       <ul className='w-full flex flex-col gap-3 items-center'>

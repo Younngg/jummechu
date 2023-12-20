@@ -79,7 +79,9 @@ export const getParty = async (partyId: string): Promise<PartyDetail> => {
     "id":_id,
     "updatedAt":_updatedAt,
     createdBy->{name, email, image, "id":_id},
-    "foods":foods[]->{name,"id":_id, "voters":voters[]->{"id":_id,name,image,email}}
+    "foods":foods[]->{name,"id":_id, "voters":voters[]->{"id":_id,name,image,email}},
+    isClosed,
+    canBeAdded
   }`);
 };
 
@@ -89,5 +91,7 @@ export const createParty = async (name: string, userId: string) => {
     name,
     createdBy: { _ref: userId, _type: 'reference' },
     foods: [],
+    isClosed: false,
+    canBeAdded: false,
   });
 };
