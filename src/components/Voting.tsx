@@ -7,9 +7,13 @@ import VoterList from './VoterList';
 
 type Props = {
   party: PartyDetail;
+  canBeDeleted: boolean;
 };
 
-const Voting = ({ party: { id, foods, createdBy, isClosed } }: Props) => {
+const Voting = ({
+  party: { id, foods, createdBy, isClosed },
+  canBeDeleted,
+}: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -18,24 +22,17 @@ const Voting = ({ party: { id, foods, createdBy, isClosed } }: Props) => {
     return voters.find((voter) => voter.email === user?.email) ? true : false;
   };
 
-  const checkCanBeDeleted = () => {
-    if (user) {
-      if (!isClosed && user.id === createdBy.id) return true;
-    }
-
-    return false;
-  };
-
   return (
     <div>
       <ul className='w-full flex flex-col gap-3 items-center'>
         {foods.map((food) => (
           <li key={food.id}>
             <FoodCard
+              isClosed={isClosed}
               disabled={checkVoted()}
               food={food}
               partyId={id}
-              canBeDeleted={checkCanBeDeleted()}
+              canBeDeleted={canBeDeleted}
             />
             <div id={`accordion${food.id}`} />
           </li>

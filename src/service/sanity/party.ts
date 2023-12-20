@@ -56,6 +56,13 @@ export const voteForFood = async (foodId: string, userId: string) => {
     .commit({ autoGenerateArrayKeys: true });
 };
 
+export const updatePartyClosedState = async (
+  partyId: string,
+  isClosed: boolean
+) => {
+  return client.patch(partyId).set({ isClosed }).commit();
+};
+
 export const getPartiesOfUserId = async (userId: string) => {
   return client.fetch(
     `*[_type == "party" && "${userId}" in foods[] -> voters[]._ref || _type == "party" && createdBy->_id == "${userId}"]{

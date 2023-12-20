@@ -32,16 +32,7 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const onClickDelete = () => deleteFood({ foodId: food.id });
 
   return (
-    <div className='flex items-center gap-5'>
-      <div className='flex'>
-        <p>{food.voters.length}</p>
-        <ToggleButton
-          toggled={isOpenVoterList}
-          onToggle={setIsOpenVoterList}
-          onText={<UpIcon />}
-          offText={<DownIcon />}
-        />
-      </div>
+    <div className='flex items-center gap-3'>
       <ToggleButton
         toggled={voted}
         onToggle={handleVote}
@@ -59,11 +50,6 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
         >
           삭제
         </button>
-      )}
-      {isOpenVoterList && (
-        <AccordionPortal id={food.id}>
-          <VoterList voters={food.voters}  />
-        </AccordionPortal>
       )}
     </div>
   );

@@ -33,7 +33,22 @@ const usePartyDetail = (partyId: string) => {
       queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
   });
 
-  return { party, isError, isLoading, setVote, addFood, deleteFood };
+  const { mutate: updatePartyClosed } = useMutation({
+    mutationFn: ({ isClosed }: { isClosed: boolean }) =>
+      partyApi.updatePartyClosed(partyId, isClosed),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
+  });
+
+  return {
+    party,
+    isError,
+    isLoading,
+    setVote,
+    addFood,
+    deleteFood,
+    updatePartyClosed,
+  };
 };
 
 export default usePartyDetail;
