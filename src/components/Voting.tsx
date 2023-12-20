@@ -1,9 +1,10 @@
 'use client';
 
-import { PartyDetail } from '@/types/party';
+import { Food, PartyDetail } from '@/types/party';
 import { useSession } from 'next-auth/react';
 import FoodCard from './FoodCard';
 import VoterList from './VoterList';
+import { User } from '@/types/user';
 
 type Props = {
   party: PartyDetail;
@@ -22,7 +23,12 @@ const Voting = ({
     return voters.find((voter) => voter.email === user?.email) ? true : false;
   };
 
-
+  const mostVotedFood = foods.reduce(
+    (prev, cur) => {
+      return cur.voters.length > prev.voters.length ? cur : prev;
+    },
+    { voters: [] } as unknown as Food
+  );
 
   return (
     <div>
@@ -35,6 +41,7 @@ const Voting = ({
               food={food}
               partyId={id}
               canBeDeleted={canBeDeleted}
+              mostVotedFood={mostVotedFood}
             />
             <div id={`accordion${food.id}`} />
           </li>

@@ -14,6 +14,7 @@ type Props = {
   canBeDeleted: boolean;
   partyId: string;
   isClosed: boolean;
+  mostVotedFood: Food;
 };
 
 const FoodCard = ({
@@ -22,12 +23,20 @@ const FoodCard = ({
   canBeDeleted,
   partyId,
   isClosed,
+  mostVotedFood,
 }: Props) => {
   const [isOpenVoterList, setIsOpenVoterList] = useState(false);
 
   return (
-    <div className='flex items-center justify-between border w-96 px-4 py-3 rounded-md'>
-      <p>{food.name}</p>
+    <div
+      className={`flex items-center justify-between border w-96 px-4 py-3 rounded-md ${
+        isClosed && mostVotedFood.id === food.id && 'bg-yellow-50'
+      }`}
+    >
+      <p>
+        {food.name}
+        <span>{isClosed && mostVotedFood.id === food.id && '🥇'}</span>
+      </p>
       <div className='flex items-center gap-3'>
         <div className='flex'>
           <p>{food.voters.length}</p>
@@ -38,7 +47,7 @@ const FoodCard = ({
             offText={<DownIcon />}
           />
         </div>
-        {isClosed === false && (
+        {!isClosed && (
           <ActionBar
             food={food}
             partyId={partyId}

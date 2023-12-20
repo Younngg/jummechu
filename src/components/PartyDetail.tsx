@@ -38,8 +38,8 @@ const PartyDetail = ({ partyId }: Props) => {
       </div>
       <div className='mt-8 flex flex-col gap-3'>
         <Voting party={party} canBeDeleted={checkPresident()} />
-        <VotingForm partyId={partyId} />
-        {checkPresident() && party.isClosed === false ? (
+        {!party.isClosed && <VotingForm partyId={partyId} />}
+        {checkPresident() && !party.isClosed ? (
           <div className='flex justify-center'>
             <button
               className='px-2 py-1 rounded-md bg-gray-200'
