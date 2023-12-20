@@ -1,23 +1,25 @@
+import { ReactNode } from 'react';
+
 type Props = {
   toggled: boolean;
   onToggle: (toggled: boolean) => void;
-  onText: string;
-  offText: string;
-  disabled: boolean;
+  onText: string | ReactNode;
+  offText: string | ReactNode;
+  disabled?: boolean;
+  style?: string;
 };
 
-const VoteToggleButton = ({
+const ToggleButton = ({
   toggled,
   onToggle,
   onText,
   offText,
-  disabled,
+  disabled = false,
+  style,
 }: Props) => {
   return (
     <button
-      className={`px-2 py-1 rounded-md disabled:bg-gray-300 ${
-        toggled ? 'bg-red-200' : 'bg-sky-100'
-      }`}
+      className={style}
       onClick={() => onToggle(!toggled)}
       disabled={disabled && !toggled}
     >
@@ -26,4 +28,4 @@ const VoteToggleButton = ({
   );
 };
 
-export default VoteToggleButton;
+export default ToggleButton;

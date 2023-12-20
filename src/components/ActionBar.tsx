@@ -1,7 +1,12 @@
 import usePartyDetail from '@/hooks/party';
 import { Food } from '@/types/party';
 import { useSession } from 'next-auth/react';
-import VoteToggleButton from './ui/VoteToggleButton';
+import ToggleButton from './ui/ToggleButton';
+import { useState } from 'react';
+import UpIcon from './ui/icons/UpIcon';
+import DownIcon from './ui/icons/DownIcon';
+import VoterList from './VoterList';
+import AccordionPortal from './ui/AccordionPortal';
 
 type Props = {
   food: Food;
@@ -16,6 +21,8 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
 
   const { setVote, deleteFood } = usePartyDetail(partyId);
 
+  const [isOpenVoterList, setIsOpenVoterList] = useState(false);
+
   const voted = user
     ? food.voters.some((voter) => voter.id === user.id)
     : false;
@@ -26,13 +33,24 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
 
   return (
     <div className='flex items-center gap-5'>
-      {food.voters && <p>{food.voters.length}</p>}
-      <VoteToggleButton
+      <div className='flex'>
+        <p>{food.voters.length}</p>
+        <ToggleButton
+          toggled={isOpenVoterList}
+          onToggle={setIsOpenVoterList}
+          onText={<UpIcon />}
+          offText={<DownIcon />}
+        />
+      </div>
+      <ToggleButton
         toggled={voted}
         onToggle={handleVote}
-        onText='투표 취소'
+        onText='취소'
         offText='투표'
         disabled={disabled}
+        style={`px-2 py-1 rounded-md disabled:bg-gray-300 ${
+          voted ? 'bg-red-200' : 'bg-sky-100'
+        }`}
       />
       {canBeDeleted && (
         <button
@@ -41,6 +59,11 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
         >
           삭제
         </button>
+      )}
+      {isOpenVoterList && (
+        <AccordionPortal id={food.id}>
+          <VoterList voters={food.voters}  />
+        </AccordionPortal>
       )}
     </div>
   );
