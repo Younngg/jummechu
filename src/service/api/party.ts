@@ -6,10 +6,14 @@ export const partyApi = {
       method: 'GET',
     }).then((res) => res.json());
   },
-  createParty: async (name: string) => {
+  createParty: async (
+    name: string,
+    isAnonymous: boolean,
+    canBeAdded: boolean
+  ) => {
     return fetch('/api/party', {
       method: 'POST',
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name, isAnonymous, canBeAdded }),
     }).then((res) => res.json());
   },
   getPartyDetail: async (partyId: string): Promise<PartyDetail> => {

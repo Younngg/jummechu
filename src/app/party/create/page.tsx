@@ -11,7 +11,11 @@ const CreatePartyPage = async () => {
     redirect('/auth/signin');
   }
 
-  return <PartyForm />;
+  return (
+    <div className='flex justify-center py-44'>
+      <PartyForm />
+    </div>
+  );
 };
 
 export default CreatePartyPage;

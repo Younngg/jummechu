@@ -10,12 +10,21 @@ const useParties = () => {
     isLoading,
   } = useQuery({ queryKey: ['parties'], queryFn: partyApi.getAllParties });
 
-  const { mutate: createParty } = useMutation({
-    mutationFn: (name: string) => partyApi.createParty(name),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['parties'] }),
+  const { mutate: createParty, data: newParty } = useMutation({
+    mutationFn: ({
+      name,
+      isAnonymous,
+      canBeAdded,
+    }: {
+      name: string;
+      isAnonymous: boolean;
+      canBeAdded: boolean;
+    }) => partyApi.createParty(name, isAnonymous, canBeAdded),
+    onSuccess: (data) =>
+      queryClient.invalidateQueries({ queryKey: ['parties'] }),
   });
 
-  return { parties, isError, isLoading, createParty };
+  return { parties, isError, isLoading, createParty, newParty };
 };
 
 export default useParties;

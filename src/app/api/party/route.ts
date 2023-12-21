@@ -26,7 +26,9 @@ export async function POST(req: NextRequest) {
     return new Response('Authentication Error', { status: 401 });
   }
 
-  const { name } = await req.json();
+  const { name, isAnonymous, canBeAdded } = await req.json();
 
-  return createParty(name, user.id).then((res) => NextResponse.json(res));
+  return createParty(name, isAnonymous, canBeAdded, user.id).then((res) =>
+    NextResponse.json(res)
+  );
 }

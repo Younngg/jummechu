@@ -30,6 +30,11 @@ export default {
       name: 'canBeAdded',
       type: 'boolean',
     },
+    {
+      title: 'IsAnonymous',
+      name: 'isAnonymous',
+      type: 'boolean',
+    },
   ],
   initialValue: {
     isClosed: false,

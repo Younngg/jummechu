@@ -81,17 +81,23 @@ export const getParty = async (partyId: string): Promise<PartyDetail> => {
     createdBy->{name, email, image, "id":_id},
     "foods":foods[]->{name,"id":_id, "voters":voters[]->{"id":_id,name,image,email}},
     isClosed,
-    canBeAdded
+    canBeAdded,
+    isAnonymous
   }`);
 };
 
-export const createParty = async (name: string, userId: string) => {
+export const createParty = async (
+  name: string,
+  isAnonymous: boolean,
+  canBeAdded: boolean,
+  userId: string
+) => {
   return client.create({
     _type: 'party',
     name,
     createdBy: { _ref: userId, _type: 'reference' },
     foods: [],
-    isClosed: false,
-    canBeAdded: false,
+    isAnonymous,
+    canBeAdded,
   });
 };
