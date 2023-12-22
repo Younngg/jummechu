@@ -31,6 +31,13 @@ const PartyDetail = ({ partyId }: Props) => {
 
   const onClickVotingCloses = () => updatePartyClosed({ isClosed: true });
 
+  const makeVisibleVotingForm = () => {
+    if (!party.isClosed) {
+      if (checkPresident() || (!checkPresident && party.canBeAdded))
+        return <VotingForm partyId={partyId} />;
+    }
+  };
+
   return (
     <section className='px-3 py-6'>
       <div>
@@ -38,7 +45,7 @@ const PartyDetail = ({ partyId }: Props) => {
       </div>
       <div className='mt-8 flex flex-col gap-3'>
         <Voting party={party} canBeDeleted={checkPresident()} />
-        {!party.isClosed && <VotingForm partyId={partyId} />}
+        {makeVisibleVotingForm()}
         {checkPresident() && !party.isClosed ? (
           <div className='flex justify-center'>
             <button
