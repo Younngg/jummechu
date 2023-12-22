@@ -11,19 +11,16 @@ type Props = {
   canBeDeleted: boolean;
 };
 
-const Voting = ({
-  party: { id, foods, createdBy, isClosed },
-  canBeDeleted,
-}: Props) => {
+const Voting = ({ party, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
   const checkVoted = () => {
-    const voters = foods.flatMap((food) => food.voters);
+    const voters = party.foods.flatMap((food) => food.voters);
     return voters.find((voter) => voter.email === user?.email) ? true : false;
   };
 
-  const mostVotedFood = foods.reduce(
+  const mostVotedFood = party.foods.reduce(
     (prev, cur) => {
       return cur.voters.length > prev.voters.length ? cur : prev;
     },
@@ -33,13 +30,12 @@ const Voting = ({
   return (
     <div>
       <ul className='w-full flex flex-col gap-3 items-center'>
-        {foods.map((food) => (
+        {party.foods.map((food) => (
           <li key={food.id}>
             <FoodCard
-              isClosed={isClosed}
+              party={party}
               disabled={checkVoted()}
               food={food}
-              partyId={id}
               canBeDeleted={canBeDeleted}
               mostVotedFood={mostVotedFood}
             />
