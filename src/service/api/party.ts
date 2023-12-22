@@ -16,6 +16,11 @@ export const partyApi = {
       body: JSON.stringify({ name, isAnonymous, canBeAdded }),
     }).then((res) => res.json());
   },
+  deleteParty: async (partyId: string) => {
+    return fetch(`/api/party/${partyId}`, {
+      method: 'DELETE',
+    }).then((res) => res.json());
+  },
   getPartyDetail: async (partyId: string): Promise<PartyDetail> => {
     return fetch(`/api/party/${partyId}`, {
       method: 'GET',

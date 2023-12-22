@@ -20,11 +20,23 @@ const useParties = () => {
       isAnonymous: boolean;
       canBeAdded: boolean;
     }) => partyApi.createParty(name, isAnonymous, canBeAdded),
-    onSuccess: (data) =>
-      queryClient.invalidateQueries({ queryKey: ['parties'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['parties'] }),
   });
 
-  return { parties, isError, isLoading, createParty, newParty };
+  const { mutate: deleteParty, isSuccess: isSuccessDelete } = useMutation({
+    mutationFn: (partyId: string) => partyApi.deleteParty(partyId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['parties'] }),
+  });
+
+  return {
+    parties,
+    isError,
+    isLoading,
+    createParty,
+    newParty,
+    deleteParty,
+    isSuccessDelete,
+  };
 };
 
 export default useParties;

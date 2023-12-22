@@ -86,6 +86,10 @@ export const getParty = async (partyId: string): Promise<PartyDetail> => {
   }`);
 };
 
+export const deleteParty = async (partyId: string) => {
+  return client.delete(partyId);
+};
+
 export const createParty = async (
   name: string,
   isAnonymous: boolean,
