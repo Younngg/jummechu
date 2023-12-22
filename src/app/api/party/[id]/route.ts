@@ -1,11 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
-import {
-  updatePartyClosedState,
-  getParty,
-  deleteParty,
-} from '@/service/sanity/party';
+import { getParty, deleteParty, updateParty } from '@/service/sanity/party';
 
 type Context = {
   params: { id: string };
@@ -30,9 +26,9 @@ export async function PUT(req: NextRequest, context: Context) {
     return new Response('Authentication Error', { status: 401 });
   }
 
-  const { isClosed } = await req.json();
+  const party = await req.json();
 
-  return updatePartyClosedState(context.params.id, isClosed).then((res) =>
+  return updateParty(context.params.id, party).then((res) =>
     NextResponse.json(res)
   );
 }

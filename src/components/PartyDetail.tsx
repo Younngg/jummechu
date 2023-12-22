@@ -16,7 +16,7 @@ const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
   const { deleteParty, isSuccessDelete } = useParties();
-  const { party, updatePartyClosed } = usePartyDetail(partyId);
+  const { party, updateParty } = usePartyDetail(partyId);
 
   useEffect(() => {
     if (isSuccessDelete) redirect('/');
@@ -27,7 +27,7 @@ const PartyDetail = ({ partyId }: Props) => {
   }
 
   const checkPresident = () => {
-    const { isClosed, createdBy } = party;
+    const { createdBy } = party;
 
     if (user) {
       if (user.id === createdBy.id) return true;
@@ -36,7 +36,7 @@ const PartyDetail = ({ partyId }: Props) => {
     return false;
   };
 
-  const onClickVotingCloses = () => updatePartyClosed({ isClosed: true });
+  const onClickVotingCloses = () => updateParty({ isClosed: true });
 
   const onClickDeleteParty = () => deleteParty(party.id);
 

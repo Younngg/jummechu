@@ -22,6 +22,13 @@ export type PartyDetail = SimpleParty & {
   isAnonymous: boolean;
 };
 
+export type UpdatedParty = {
+  name?: string;
+  isClosed?: boolean;
+  canBeAdded?: boolean;
+  isAnonymous?: boolean;
+};
+
 export type Food = {
   name: string;
   voters: User[];

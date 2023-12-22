@@ -1,4 +1,4 @@
-import { PartyDetail, SimpleParty } from '@/types/party';
+import { PartyDetail, SimpleParty, UpdatedParty } from '@/types/party';
 
 export const partyApi = {
   getAllParties: async (): Promise<SimpleParty[]> => {
@@ -26,10 +26,10 @@ export const partyApi = {
       method: 'GET',
     }).then((res) => res.json());
   },
-  updatePartyClosed: async (partyId: string, isClosed: boolean) => {
+  updateParty: async (partyId: string, party: UpdatedParty) => {
     return fetch(`/api/party/${partyId}`, {
       method: 'PUT',
-      body: JSON.stringify({ isClosed }),
+      body: JSON.stringify({ ...party }),
     }).then((res) => res.json());
   },
   addFood: async (partyId: string, name: string) => {

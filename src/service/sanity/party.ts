@@ -1,4 +1,4 @@
-import { PartyDetail } from '@/types/party';
+import { PartyDetail, UpdatedParty } from '@/types/party';
 import { client } from './sanity';
 
 const simpleProjection = `
@@ -56,11 +56,11 @@ export const voteForFood = async (foodId: string, userId: string) => {
     .commit({ autoGenerateArrayKeys: true });
 };
 
-export const updatePartyClosedState = async (
-  partyId: string,
-  isClosed: boolean
-) => {
-  return client.patch(partyId).set({ isClosed }).commit();
+export const updateParty = async (partyId: string, party: UpdatedParty) => {
+  return client
+    .patch(partyId)
+    .set({ ...party })
+    .commit();
 };
 
 export const getPartiesOfUserId = async (userId: string) => {

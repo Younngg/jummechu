@@ -1,4 +1,5 @@
 import { partyApi } from '@/service/api/party';
+import { UpdatedParty } from '@/types/party';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const usePartyDetail = (partyId: string) => {
@@ -33,9 +34,8 @@ const usePartyDetail = (partyId: string) => {
       queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
   });
 
-  const { mutate: updatePartyClosed } = useMutation({
-    mutationFn: ({ isClosed }: { isClosed: boolean }) =>
-      partyApi.updatePartyClosed(partyId, isClosed),
+  const { mutate: updateParty } = useMutation({
+    mutationFn: (party: UpdatedParty) => partyApi.updateParty(partyId, party),
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
   });
@@ -47,7 +47,7 @@ const usePartyDetail = (partyId: string) => {
     setVote,
     addFood,
     deleteFood,
-    updatePartyClosed,
+    updateParty,
   };
 };
 
