@@ -42,7 +42,7 @@ const PartyForm = () => {
           />
         </div>
         <div className='flex gap-3'>
-          <label htmlFor='canBeAdded'>항목 추가 허용</label>
+          <label htmlFor='canBeAdded'>선택 항목 추가 허용</label>
           <input
             type='checkbox'
             id='canBeAdded'

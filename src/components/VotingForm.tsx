@@ -28,7 +28,7 @@ const VotingForm = ({ partyId }: Props) => {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <button className='px-2 py-1 bg-sky-200 rounded-sm'>추가</button>
+      <button className='px-2 py-1 bg-sky-200 rounded-sm'>항목 추가</button>
     </form>
   );
 };
