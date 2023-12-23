@@ -1,24 +1,50 @@
 'use client';
 
 import useParties from '@/hooks/parties';
+import useVote from '@/hooks/vote';
+import { PartyDetail } from '@/types/party';
 import { redirect } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 
-const PartyForm = () => {
-  const [name, setName] = useState('');
-  const [isAnonymous, setIsAnonymous] = useState(false);
-  const [canBeAdded, setCanBeAdded] = useState(false);
-  const { createParty, newParty } = useParties();
+type Props = {
+  partyId?: string;
+};
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    createParty({ name, isAnonymous, canBeAdded });
-    setName('');
-  };
+const PartyForm = ({ partyId }: Props) => {
+  const { party } = useVote(partyId ?? '');
+  const { createParty, newParty, updateParty, isSuccessUpdate } = useParties();
+
+  const [name, setName] = useState(party ? party.name : '');
+  const [isAnonymous, setIsAnonymous] = useState(
+    party ? party.isAnonymous : false
+  );
+  const [canBeAdded, setCanBeAdded] = useState(
+    party ? party.canBeAdded : false
+  );
 
   useEffect(() => {
     if (newParty) redirect(`/party/${newParty._id}`);
   }, [newParty]);
+
+  useEffect(() => {
+    if (party) {
+      isSuccessUpdate && redirect(`/party/${party.id}`);
+    }
+  }, [isSuccessUpdate, party]);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (party) {
+      updateParty({
+        partyId: party.id,
+        updated: { name, isAnonymous, canBeAdded },
+      });
+      setName('');
+      return;
+    }
+    createParty({ name, isAnonymous, canBeAdded });
+    setName('');
+  };
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
@@ -38,6 +64,7 @@ const PartyForm = () => {
           <input
             type='checkbox'
             id='anonymous'
+            defaultChecked={isAnonymous}
             onChange={(e) => setIsAnonymous(e.target.checked)}
           />
         </div>
@@ -46,11 +73,14 @@ const PartyForm = () => {
           <input
             type='checkbox'
             id='canBeAdded'
+            defaultChecked={canBeAdded}
             onChange={(e) => setCanBeAdded(e.target.checked)}
           />
         </div>
       </div>
-      <button className='px-2 py-1 bg-green-200 rounded-md'>추가</button>
+      <button className='px-2 py-1 bg-green-200 rounded-md'>
+        {party ? '수정' : '추가'}
+      </button>
     </form>
   );
 };
