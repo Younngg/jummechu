@@ -1,8 +1,7 @@
 import { partyApi } from '@/service/api/party';
-import { UpdatedParty } from '@/types/party';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-const usePartyDetail = (partyId: string) => {
+const useVote = (partyId: string) => {
   const queryClient = useQueryClient();
 
   const {
@@ -44,4 +43,4 @@ const usePartyDetail = (partyId: string) => {
   };
 };
 
-export default usePartyDetail;
+export default useVote;

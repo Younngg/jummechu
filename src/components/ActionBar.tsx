@@ -1,12 +1,8 @@
-import usePartyDetail from '@/hooks/party';
+import useVote from '@/hooks/vote';
 import { Food } from '@/types/party';
 import { useSession } from 'next-auth/react';
 import ToggleButton from './ui/ToggleButton';
 import { useState } from 'react';
-import UpIcon from './ui/icons/UpIcon';
-import DownIcon from './ui/icons/DownIcon';
-import VoterList from './VoterList';
-import AccordionPortal from './ui/AccordionPortal';
 
 type Props = {
   food: Food;
@@ -19,9 +15,7 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { setVote, deleteFood } = usePartyDetail(partyId);
-
-  const [isOpenVoterList, setIsOpenVoterList] = useState(false);
+  const { setVote, deleteFood } = useVote(partyId);
 
   const voted = user
     ? food.voters.some((voter) => voter.id === user.id)

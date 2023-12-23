@@ -3,7 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Voting from './Voting';
 import VotingForm from './VotingForm';
-import usePartyDetail from '@/hooks/party';
+import useVote from '@/hooks/vote';
 import useParties from '@/hooks/parties';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
@@ -17,7 +17,7 @@ const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
   const { deleteParty, isSuccessDelete, updateParty } = useParties();
-  const { party } = usePartyDetail(partyId);
+  const { party } = useVote(partyId);
 
   useEffect(() => {
     if (isSuccessDelete) redirect('/');
