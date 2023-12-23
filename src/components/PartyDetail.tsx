@@ -7,6 +7,7 @@ import usePartyDetail from '@/hooks/party';
 import useParties from '@/hooks/parties';
 import { useEffect } from 'react';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 type Props = {
   partyId: string;
@@ -15,8 +16,8 @@ type Props = {
 const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
-  const { deleteParty, isSuccessDelete } = useParties();
-  const { party, updateParty } = usePartyDetail(partyId);
+  const { deleteParty, isSuccessDelete, updateParty } = useParties();
+  const { party } = usePartyDetail(partyId);
 
   useEffect(() => {
     if (isSuccessDelete) redirect('/');
@@ -36,7 +37,8 @@ const PartyDetail = ({ partyId }: Props) => {
     return false;
   };
 
-  const onClickVotingCloses = () => updateParty({ isClosed: true });
+  const onClickVotingCloses = () =>
+    updateParty({ partyId, updated: { isClosed: true } });
 
   const onClickDeleteParty = () => deleteParty(party.id);
 
@@ -70,12 +72,20 @@ const PartyDetail = ({ partyId }: Props) => {
             </button>
           ) : undefined}
           {checkPresident() && (
-            <button
-              className='px-2 py-1 rounded-md bg-gray-200'
-              onClick={onClickDeleteParty}
-            >
-              삭제
-            </button>
+            <>
+              <Link
+                className='px-2 py-1 rounded-md bg-gray-200'
+                href={`/party/update/${partyId}`}
+              >
+                수정
+              </Link>
+              <button
+                className='px-2 py-1 rounded-md bg-gray-200'
+                onClick={onClickDeleteParty}
+              >
+                삭제
+              </button>
+            </>
           )}
         </div>
       </div>

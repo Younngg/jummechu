@@ -34,12 +34,6 @@ const usePartyDetail = (partyId: string) => {
       queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
   });
 
-  const { mutate: updateParty } = useMutation({
-    mutationFn: (party: UpdatedParty) => partyApi.updateParty(partyId, party),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
-  });
-
   return {
     party,
     isError,
@@ -47,7 +41,6 @@ const usePartyDetail = (partyId: string) => {
     setVote,
     addFood,
     deleteFood,
-    updateParty,
   };
 };
 
