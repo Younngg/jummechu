@@ -1,8 +1,8 @@
 import { FormEvent, ReactNode } from 'react';
 
 type Props = {
-  // color: 'gray' | 'red' | 'sky' | 'green' | 'darkgray' | '';
-  color: string;
+  color: 'gray' | 'red' | 'sky' | 'green' | 'darkgray' | '';
+  // color: string;
   text: string | ReactNode;
   onClick: () => void;
   disabled?: boolean;
@@ -25,7 +25,7 @@ const DefaultButton = ({
 }: Props) => {
   return (
     <button
-      className={`px-2 py-1 rounded-md ${color}`}
+      className={`px-2 py-1 rounded-md ${colorText[color]}`}
       onClick={() => onClick()}
       disabled={disabled}
     >

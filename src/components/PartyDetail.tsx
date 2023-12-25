@@ -5,19 +5,27 @@ import Voting from './Voting';
 import VotingForm from './VotingForm';
 import useVote from '@/hooks/vote';
 import useParties from '@/hooks/parties';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import ModalPortal from './ui/ModalPortal';
+import Modal from './ui/Modal';
+import DeleteModal from './DeleteModal';
+import DefaultButton from './ui/DefaultButton';
 
 type Props = {
   partyId: string;
 };
+
+const BUTTON_STYLE = 'px-2 py-1 rounded-md bg-gray-200';
 
 const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
   const { deleteParty, isSuccessDelete, updateParty } = useParties();
   const { party } = useVote(partyId);
+
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (isSuccessDelete) redirect('/');
@@ -29,11 +37,9 @@ const PartyDetail = ({ partyId }: Props) => {
 
   const checkPresident = () => {
     const { createdBy } = party;
-
     if (user) {
       if (user.id === createdBy.id) return true;
     }
-
     return false;
   };
 
@@ -49,8 +55,6 @@ const PartyDetail = ({ partyId }: Props) => {
     }
   };
 
-  console.log(checkPresident());
-
   return (
     <section className='px-3 py-6'>
       <div className='text-center'>
@@ -64,31 +68,36 @@ const PartyDetail = ({ partyId }: Props) => {
         {makeVisibleVotingForm()}
         <div className='flex justify-center gap-2'>
           {checkPresident() && !party.isClosed ? (
-            <button
-              className='px-2 py-1 rounded-md bg-gray-200'
+            <DefaultButton
+              color='gray'
               onClick={onClickVotingCloses}
-            >
-              투표 마감
-            </button>
+              text='투표 마감'
+            />
           ) : undefined}
           {checkPresident() && (
             <>
-              <Link
-                className='px-2 py-1 rounded-md bg-gray-200'
-                href={`/party/update/${partyId}`}
-              >
+              <Link className={BUTTON_STYLE} href={`/party/update/${partyId}`}>
                 수정
               </Link>
-              <button
-                className='px-2 py-1 rounded-md bg-gray-200'
-                onClick={onClickDeleteParty}
-              >
-                삭제
-              </button>
+              <DefaultButton
+                color='gray'
+                onClick={() => setOpenModal(true)}
+                text='삭제'
+              />
             </>
           )}
         </div>
       </div>
+      {openModal && (
+        <ModalPortal>
+          <Modal onClose={() => setOpenModal(false)}>
+            <DeleteModal
+              onClose={() => setOpenModal(false)}
+              onDelete={onClickDeleteParty}
+            />
+          </Modal>
+        </ModalPortal>
+      )}
     </section>
   );
 };
