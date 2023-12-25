@@ -3,6 +3,7 @@ import { Food } from '@/types/party';
 import { useSession } from 'next-auth/react';
 import ToggleButton from './ui/ToggleButton';
 import { useState } from 'react';
+import DefaultButton from './ui/DefaultButton';
 
 type Props = {
   food: Food;
@@ -38,12 +39,11 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
         }`}
       />
       {canBeDeleted && (
-        <button
-          className={`bg-red-200 px-2 py-1 rounded-md disabled:bg-gray-300`}
+        <DefaultButton
+          color='bg-red-200 disabled:bg-gray-300'
           onClick={onClickDelete}
-        >
-          삭제
-        </button>
+          text='삭제'
+        />
       )}
     </div>
   );

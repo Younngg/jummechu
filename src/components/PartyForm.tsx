@@ -2,9 +2,9 @@
 
 import useParties from '@/hooks/parties';
 import useVote from '@/hooks/vote';
-import { PartyDetail } from '@/types/party';
 import { redirect } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
+import DefaultButton from './ui/DefaultButton';
 
 type Props = {
   partyId?: string;
@@ -47,7 +47,7 @@ const PartyForm = ({ partyId }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
+    <form className='flex flex-col gap-3'>
       <div className='flex gap-3'>
         <label htmlFor='partyName'>투표명</label>
         <input
@@ -78,7 +78,10 @@ const PartyForm = ({ partyId }: Props) => {
           />
         </div>
       </div>
-      <button className='px-2 py-1 bg-green-200 rounded-md'>
+      <button
+        className='px-2 py-1 bg-green-200 rounded-md'
+        onClick={handleSubmit}
+      >
         {party ? '수정' : '추가'}
       </button>
     </form>
