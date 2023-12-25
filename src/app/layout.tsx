@@ -30,6 +30,7 @@ export default function RootLayout({
             <QueryClientContext>{children}</QueryClientContext>
           </main>
         </AuthContext>
+        <div id='modal' />
       </body>
     </html>
   );
