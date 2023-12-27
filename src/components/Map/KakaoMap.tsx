@@ -12,7 +12,7 @@ const KakaoMap = ({ children, onCreate, location }: Props) => {
     return (
       <Map
         center={{ lat: location.lat, lng: location.lng }}
-        style={{ width: '100%', height: '360px' }}
+        style={{ width: '100%', height: '400px' }}
         onCreate={onCreate}
       >
         {children}

@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import KakaoMapMarker from './KakaoMapMarker';
 import useGeoLocation from '@/hooks/geoLocation';
 import CurrentLocationMarker from './CurrentLocationMarker';
+import { CustomOverlayMap } from 'react-kakao-maps-sdk';
+import PlaceList from './PlaceList';
+import PlaceInfoSheet from './PlaceInfoSheet';
 
 type Props = {
   foodName: string;
@@ -52,17 +55,33 @@ const SearchMap = ({ foodName }: Props) => {
   }, [map, foodName, location?.lng, location?.lat]);
 
   return (
-    <KakaoMap onCreate={setMap} location={location}>
-      {markers.map((marker) => (
-        <KakaoMapMarker
-          key={marker.content}
-          place={marker}
-          onClick={() => setInfo(marker)}
-          info={info}
-        />
-      ))}
-      {location && <CurrentLocationMarker location={location} />}
-    </KakaoMap>
+    <section className='mt-10'>
+      <h2 className='text-xl font-bold text-center mb-5'>
+        근처 {foodName}집😋
+      </h2>
+      <KakaoMap onCreate={setMap} location={location}>
+        {markers.map((marker) => (
+          <div key={marker.content}>
+            <KakaoMapMarker
+              place={marker}
+              onClick={() => setInfo(marker)}
+              info={info}
+            />
+            {info && info.position === marker.position && (
+              <CustomOverlayMap
+                position={{
+                  lat: Number(marker.position.lat),
+                  lng: Number(marker.position.lng),
+                }}
+              >
+                <PlaceInfoSheet place={marker} />
+              </CustomOverlayMap>
+            )}
+          </div>
+        ))}
+        {location && <CurrentLocationMarker location={location} />}
+      </KakaoMap>
+    </section>
   );
 };
 

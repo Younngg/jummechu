@@ -17,11 +17,7 @@ const KakaoMapMarker = ({ place, onClick, info }: Props) => {
         lng: Number(place.position.lng),
       }}
       onClick={onClick}
-    >
-      {info && info.position === place.position && (
-        <PlaceInfoSheet place={place} />
-      )}
-    </MapMarker>
+    />
   );
 };
 
