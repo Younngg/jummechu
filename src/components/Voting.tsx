@@ -9,9 +9,10 @@ import { User } from '@/types/user';
 type Props = {
   party: PartyDetail;
   canBeDeleted: boolean;
+  mostVotedFood: Food;
 };
 
-const Voting = ({ party, canBeDeleted }: Props) => {
+const Voting = ({ party, canBeDeleted, mostVotedFood }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -19,13 +20,6 @@ const Voting = ({ party, canBeDeleted }: Props) => {
     const voters = party.foods.flatMap((food) => food.voters);
     return voters.find((voter) => voter.email === user?.email) ? true : false;
   };
-
-  const mostVotedFood = party.foods.reduce(
-    (prev, cur) => {
-      return cur.voters.length > prev.voters.length ? cur : prev;
-    },
-    { voters: [] } as unknown as Food
-  );
 
   return (
     <div>

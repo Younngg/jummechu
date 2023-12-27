@@ -12,6 +12,8 @@ import ModalPortal from './ui/ModalPortal';
 import Modal from './ui/Modal';
 import DeleteModal from './DeleteModal';
 import DefaultButton from './ui/DefaultButton';
+import SearchMap from './Map/SearchMap';
+import { Food } from '@/types/party';
 
 type Props = {
   partyId: string;
@@ -55,6 +57,13 @@ const PartyDetail = ({ partyId }: Props) => {
     }
   };
 
+  const mostVotedFood = party.foods.reduce(
+    (prev, cur) => {
+      return cur.voters.length > prev.voters.length ? cur : prev;
+    },
+    { voters: [] } as unknown as Food
+  );
+
   return (
     <section className='px-3 py-6'>
       <div className='text-center'>
@@ -64,7 +73,11 @@ const PartyDetail = ({ partyId }: Props) => {
         )}
       </div>
       <div className='mt-8 flex flex-col gap-3'>
-        <Voting party={party} canBeDeleted={checkPresident()} />
+        <Voting
+          party={party}
+          canBeDeleted={checkPresident()}
+          mostVotedFood={mostVotedFood}
+        />
         {makeVisibleVotingForm()}
         <div className='flex justify-center gap-2'>
           {checkPresident() && !party.isClosed ? (
@@ -88,6 +101,7 @@ const PartyDetail = ({ partyId }: Props) => {
           )}
         </div>
       </div>
+      {party.isClosed && <SearchMap foodName={mostVotedFood.name} />}
       {openModal && (
         <ModalPortal>
           <Modal onClose={() => setOpenModal(false)}>

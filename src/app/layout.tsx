@@ -4,6 +4,7 @@ import './globals.css';
 import AuthContext from '@/context/AuthContext';
 import Header from '@/components/Header';
 import QueryClientContext from '@/context/QueryClientContext';
+import Script from 'next/script';
 
 const sans = Open_Sans({ subsets: ['latin'] });
 
@@ -31,6 +32,10 @@ export default function RootLayout({
           </main>
         </AuthContext>
         <div id='modal' />
+        <Script
+          src='//dapi.kakao.com/v2/maps/sdk.js?appkey=39eb6092d981cc08bd8e358203a356ce&libraries=services,clusterer&autoload=false'
+          strategy='beforeInteractive'
+        />
       </body>
     </html>
   );

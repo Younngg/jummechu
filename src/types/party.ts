@@ -34,3 +34,8 @@ export type Food = {
   voters: User[];
   id: string;
 };
+
+export type Place = {
+  position: { lat: string; lng: string };
+  content: string;
+};
