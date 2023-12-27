@@ -34,9 +34,9 @@ const PartyForm = ({ partyId }: Props) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (party) {
+    if (partyId) {
       updateParty({
-        partyId: party.id,
+        partyId,
         updated: { name, isAnonymous, canBeAdded },
       });
       setName('');
@@ -82,7 +82,7 @@ const PartyForm = ({ partyId }: Props) => {
         className='px-2 py-1 bg-green-200 rounded-md'
         onClick={handleSubmit}
       >
-        {party ? '수정' : '추가'}
+        {partyId ? '수정' : '추가'}
       </button>
     </form>
   );
