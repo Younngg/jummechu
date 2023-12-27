@@ -14,6 +14,7 @@ import DeleteModal from './DeleteModal';
 import DefaultButton from './ui/DefaultButton';
 import SearchMap from './Map/SearchMap';
 import { Food } from '@/types/party';
+import ShareBar from './ShareBar';
 
 type Props = {
   partyId: string;
@@ -68,6 +69,9 @@ const PartyDetail = ({ partyId }: Props) => {
     <section className='px-3 py-6'>
       <div className='text-center'>
         <h2 className='text-2xl font-bold'>{party.name}</h2>
+        <div>
+          <ShareBar />
+        </div>
         {party.isAnonymous && (
           <p className='text-sm text-gray-600 mt-1'>익명 투표</p>
         )}
