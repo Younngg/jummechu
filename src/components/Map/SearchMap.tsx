@@ -59,28 +59,33 @@ const SearchMap = ({ foodName }: Props) => {
       <h2 className='text-xl font-bold text-center mb-5'>
         근처 {foodName}집😋
       </h2>
-      <KakaoMap onCreate={setMap} location={location}>
-        {markers.map((marker) => (
-          <div key={marker.content}>
-            <KakaoMapMarker
-              place={marker}
-              onClick={() => setInfo(marker)}
-              info={info}
-            />
-            {info && info.position === marker.position && (
-              <CustomOverlayMap
-                position={{
-                  lat: Number(marker.position.lat),
-                  lng: Number(marker.position.lng),
-                }}
-              >
-                <PlaceInfoSheet place={marker} />
-              </CustomOverlayMap>
-            )}
+      <div className='relative'>
+        <KakaoMap onCreate={setMap} location={location}>
+          {markers.map((marker) => (
+            <div key={`${marker.position.lat},${marker.position.lng}`}>
+              <KakaoMapMarker
+                place={marker}
+                onClick={() => setInfo(marker)}
+                info={info}
+              />
+              {info && info.position === marker.position && (
+                <CustomOverlayMap
+                  position={{
+                    lat: Number(marker.position.lat),
+                    lng: Number(marker.position.lng),
+                  }}
+                >
+                  <PlaceInfoSheet place={marker} />
+                </CustomOverlayMap>
+              )}
+            </div>
+          ))}
+          {location && <CurrentLocationMarker location={location} />}
+          <div className='absolute bottom-0 z-10 left-0 right-0'>
+            <PlaceList places={markers} info={info} setInfo={setInfo} />
           </div>
-        ))}
-        {location && <CurrentLocationMarker location={location} />}
-      </KakaoMap>
+        </KakaoMap>
+      </div>
     </section>
   );
 };

@@ -14,6 +14,7 @@ const KakaoMap = ({ children, onCreate, location }: Props) => {
         center={{ lat: location.lat, lng: location.lng }}
         style={{ width: '100%', height: '400px' }}
         onCreate={onCreate}
+        className='border rounded-md'
       >
         {children}
       </Map>

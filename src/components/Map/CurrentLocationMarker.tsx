@@ -12,7 +12,7 @@ const CurrentLocationMarker = ({ location }: Props) => {
         lng: Number(location.lng),
       }}
       image={{
-        src: 'https://res.cloudinary.com/dv6tzjgu4/image/upload/v1703684214/placeholder_ez0afg.png',
+        src: 'https://res.cloudinary.com/dv6tzjgu4/image/upload/v1703690165/rec_1_dvsa2h.png',
         size: {
           width: 50,
           height: 50,

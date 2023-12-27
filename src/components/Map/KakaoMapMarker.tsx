@@ -17,6 +17,15 @@ const KakaoMapMarker = ({ place, onClick, info }: Props) => {
         lng: Number(place.position.lng),
       }}
       onClick={onClick}
+      image={{
+        src: `https://res.cloudinary.com/dv6tzjgu4/image/upload/v1703690169/${
+          place.position === info?.position ? 'clicked' : 'unclicked'
+        }-marker.png`,
+        size: {
+          width: 30,
+          height: 30,
+        },
+      }}
     />
   );
 };
