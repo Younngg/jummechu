@@ -3,14 +3,21 @@
 import { Food, PartyDetail } from '@/types/party';
 import { useSession } from 'next-auth/react';
 import FoodCard from './FoodCard';
+import LoadingDots from './ui/LoadingDots';
 
 type Props = {
   party: PartyDetail;
   canBeDeleted: boolean;
   mostVotedFood: Food;
+  isPendingAddFood: boolean;
 };
 
-const Voting = ({ party, canBeDeleted, mostVotedFood }: Props) => {
+const Voting = ({
+  party,
+  canBeDeleted,
+  mostVotedFood,
+  isPendingAddFood,
+}: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -34,6 +41,7 @@ const Voting = ({ party, canBeDeleted, mostVotedFood }: Props) => {
             <div id={`accordion${food.id}`} />
           </li>
         ))}
+        {isPendingAddFood && <LoadingDots color='blue' />}
       </ul>
     </div>
   );

@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import ToggleButton from './ui/ToggleButton';
 import DefaultButton from './ui/DefaultButton';
 import { useDeleteFood, useSetVote } from '@/hooks/vote';
+import LoadingDots from './ui/LoadingDots';
 
 type Props = {
   food: Food;
@@ -15,8 +16,9 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { mutate: deleteFood } = useDeleteFood(partyId);
-  const { mutate: setVote } = useSetVote(partyId);
+  const { mutate: deleteFood, isPending: isPendingDelete } =
+    useDeleteFood(partyId);
+  const { mutate: setVote, isPending: isPendingVote } = useSetVote(partyId);
 
   const voted = user
     ? food.voters.some((voter) => voter.id === user.id)
@@ -40,6 +42,11 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
       />
       {canBeDeleted && (
         <DefaultButton color='red' onClick={onClickDelete} text='삭제' />
+      )}
+      {(isPendingDelete || isPendingVote) && (
+        <div className='bg-black/50 absolute inset-0 rounded-md flex justify-center items-center'>
+          <LoadingDots />
+        </div>
       )}
     </div>
   );

@@ -35,9 +35,9 @@ const PartyDetail = ({ partyId }: Props) => {
     isSuccess: isSuccessDelete,
     isPending: isPendingDelete,
   } = useDeleteParty();
-  const { mutate: updateParty, isPending: isPendingUpdate } = useUpdateParty();
+  const { mutate: updateParty } = useUpdateParty();
   const { data: party } = useGetPartyDetail(partyId);
-  const { mutate: addFood } = useAddFood(partyId);
+  const { mutate: addFood, isPending: isPendingAddFood } = useAddFood(partyId);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -101,6 +101,7 @@ const PartyDetail = ({ partyId }: Props) => {
           party={party}
           canBeDeleted={checkPresident()}
           mostVotedFood={mostVotedFood}
+          isPendingAddFood={isPendingAddFood}
         />
         {makeVisibleVotingForm()}
         <div className='flex justify-center gap-2'>

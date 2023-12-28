@@ -27,7 +27,7 @@ const FoodCard = ({
 
   return (
     <div
-      className={`flex items-center justify-between border w-96 px-4 py-3 rounded-md ${
+      className={`relative flex items-center justify-between border w-96 px-4 py-3 rounded-md ${
         isClosed && mostVotedFood.id === food.id && 'bg-yellow-50'
       }`}
     >
