@@ -13,13 +13,6 @@ const Header = () => {
       <h1 className='text-3xl font-bold'>
         <Link href='/'>점메추</Link>
       </h1>
-      <nav>
-        <ul>
-          <li>
-            <Link href='/party/create'>투표 추가</Link>
-          </li>
-        </ul>
-      </nav>
       <div>
         {user ? (
           <div className='flex'>
