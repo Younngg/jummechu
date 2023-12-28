@@ -20,6 +20,7 @@ import {
 } from '@/hooks/party';
 import { useAddFood } from '@/hooks/vote';
 import Spinner from './ui/Spinner';
+import LoadingDots from './ui/LoadingDots';
 type Props = {
   partyId: string;
 };
@@ -34,7 +35,7 @@ const PartyDetail = ({ partyId }: Props) => {
     isSuccess: isSuccessDelete,
     isPending: isPendingDelete,
   } = useDeleteParty();
-  const { mutate: updateParty } = useUpdateParty();
+  const { mutate: updateParty, isPending: isPendingUpdate } = useUpdateParty();
   const { data: party } = useGetPartyDetail(partyId);
   const { mutate: addFood } = useAddFood(partyId);
 
@@ -134,7 +135,7 @@ const PartyDetail = ({ partyId }: Props) => {
             />
             {isPendingDelete && (
               <div className='absolute inset-0 bg-black/50 flex items-center justify-center'>
-                <Spinner />
+                <LoadingDots />
               </div>
             )}
           </Modal>
