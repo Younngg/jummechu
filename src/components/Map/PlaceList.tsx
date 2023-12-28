@@ -14,7 +14,7 @@ const PlaceList = ({ places, info, setInfo }: Props) => {
       {places.map((place) => (
         <li
           key={`${place.position.lat},${place.position.lng}`}
-          className={`grow-0 shrink-0 mb-3`}
+          className={`grow-0 shrink-0 mb-3 ${info !== place && 'opacity-75'}`}
         >
           <PlaceCard info={info} place={place} onClick={setInfo} />
         </li>

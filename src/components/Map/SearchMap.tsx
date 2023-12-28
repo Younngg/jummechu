@@ -43,6 +43,7 @@ const SearchMap = ({ foodName }: Props) => {
               bounds.extend(new kakao.maps.LatLng(result[i].y, result[i].x));
             }
             setMarkers(markers);
+            setInfo(markers[0]);
             map.setBounds(bounds);
           }
         },
