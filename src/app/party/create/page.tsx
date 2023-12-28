@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import authOptions from '@/app/api/auth/[...nextauth]/options';
 import PartyForm from '@/components/PartyForm';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';

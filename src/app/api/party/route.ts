@@ -1,11 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../auth/[...nextauth]/route';
-import {
-  createParty,
-  deleteFood,
-  getPartiesOfUserId,
-} from '@/service/sanity/party';
+import { createParty, getPartiesOfUserId } from '@/service/sanity/party';
+import authOptions from '../auth/[...nextauth]/options';
 
 export async function GET() {
   const session = await getServerSession(authOptions);

@@ -1,7 +1,6 @@
 'use client';
 
 import PartyCard from './PartyCard';
-import useParties from '@/hooks/parties';
 import Spinner from './ui/Spinner';
 import { useGetAllParties } from '@/hooks/party';
 
