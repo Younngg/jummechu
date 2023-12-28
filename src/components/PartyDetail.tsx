@@ -132,6 +132,11 @@ const PartyDetail = ({ partyId }: Props) => {
               onClose={() => setOpenModal(false)}
               onDelete={onClickDeleteParty}
             />
+            {isPendingDelete && (
+              <div className='absolute inset-0 bg-black/50 flex items-center justify-center'>
+                <Spinner />
+              </div>
+            )}
           </Modal>
         </ModalPortal>
       )}
