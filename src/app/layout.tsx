@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 import './globals.css';
+import AuthContext from '@/context/AuthContext';
+import Header from '@/components/Header';
+import QueryClientContext from '@/context/QueryClientContext';
+import Script from 'next/script';
 
 const sans = Open_Sans({ subsets: ['latin'] });
 
@@ -15,10 +19,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en'>
+    <html lang='ko'>
       <body className={sans.className}>
-        <header></header>
-        <main>{children}</main>
+        <AuthContext>
+          <header className='border-b'>
+            <div className='max-w-screen-md mx-auto'>
+              <Header />
+            </div>
+          </header>
+          <main className='max-w-screen-md mx-auto'>
+            <QueryClientContext>{children}</QueryClientContext>
+          </main>
+        </AuthContext>
+        <div id='modal' />
+        <Script
+          src='//dapi.kakao.com/v2/maps/sdk.js?appkey=39eb6092d981cc08bd8e358203a356ce&libraries=services,clusterer&autoload=false'
+          strategy='beforeInteractive'
+        />
+        <Script
+          src='https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js'
+          integrity='sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8'
+          crossOrigin='anonymous'
+        />
       </body>
     </html>
   );
