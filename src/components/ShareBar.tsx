@@ -9,7 +9,9 @@ const ShareBar = () => {
 
   return (
     <div>
-      <button onClick={onClickShare}>공유하기</button>
+      <button className='btn btn-ghost btn-sm' onClick={onClickShare}>
+        공유하기
+      </button>
     </div>
   );
 };

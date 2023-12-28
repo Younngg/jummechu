@@ -19,7 +19,6 @@ import {
   useUpdateParty,
 } from '@/hooks/party';
 import { useAddFood } from '@/hooks/vote';
-import Spinner from './ui/Spinner';
 import LoadingDots from './ui/LoadingDots';
 type Props = {
   partyId: string;

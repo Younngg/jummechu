@@ -18,12 +18,14 @@ const VotingForm = ({ handleSubmit }: Props) => {
     >
       <input
         placeholder='항목 이름'
-        className='w-96 border px-2 py-1 rounded-sm'
+        className='w-96 border px-2 py-1 rounded-md'
         type='text'
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <button className='px-2 py-1 bg-sky-200 rounded-sm'>항목 추가</button>
+      <button className='px-2 py-1 bg-sky-200 rounded-md btn btn-sm'>
+        추가
+      </button>
     </form>
   );
 };

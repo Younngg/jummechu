@@ -11,7 +11,11 @@ const LogIn = ({ providers, callbackUrl }: Props) => {
   return (
     <>
       {Object.values(providers).map(({ name, id }) => (
-        <button key={id} onClick={() => signIn(id, { callbackUrl })}>
+        <button
+          key={id}
+          className='btn btn-outline btn-primary'
+          onClick={() => signIn(id, { callbackUrl })}
+        >
           {name}으로 로그인
         </button>
       ))}

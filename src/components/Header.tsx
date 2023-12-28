@@ -15,12 +15,23 @@ const Header = () => {
       </h1>
       <div>
         {user ? (
-          <div className='flex'>
-            <UserProfile user={user} />
-            <button onClick={() => signOut()}>로그아웃</button>
+          <div className='flex dropdown dropdown-bottom'>
+            <div tabIndex={0} role='button'>
+              <UserProfile user={user} />
+            </div>
+            <ul
+              tabIndex={0}
+              className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
+            >
+              <li>
+                <button onClick={() => signOut()}>로그아웃</button>
+              </li>
+            </ul>
           </div>
         ) : (
-          <button onClick={() => signIn()}>로그인</button>
+          <button className='btn btn-ghost' onClick={() => signIn()}>
+            로그인
+          </button>
         )}
       </div>
     </div>
