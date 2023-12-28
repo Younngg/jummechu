@@ -3,9 +3,10 @@
 import PartyCard from './PartyCard';
 import useParties from '@/hooks/parties';
 import Spinner from './ui/Spinner';
+import { useGetAllParties } from '@/hooks/party';
 
 const PartyList = () => {
-  const { parties, isLoading } = useParties();
+  const { data: parties, isLoading } = useGetAllParties();
 
   return (
     <section className='px-3 py-6'>

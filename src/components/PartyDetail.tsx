@@ -3,8 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Voting from './Voting';
 import VotingForm from './VotingForm';
-import useParties from '@/hooks/parties';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import ModalPortal from './ui/ModalPortal';
@@ -14,8 +13,13 @@ import DefaultButton from './ui/DefaultButton';
 import SearchMap from './Map/SearchMap';
 import { Food } from '@/types/party';
 import ShareBar from './ShareBar';
-import { useGetPartyDetail } from '@/hooks/party';
-
+import {
+  useDeleteParty,
+  useGetPartyDetail,
+  useUpdateParty,
+} from '@/hooks/party';
+import { useAddFood } from '@/hooks/vote';
+import Spinner from './ui/Spinner';
 type Props = {
   partyId: string;
 };
@@ -25,8 +29,14 @@ const BUTTON_STYLE = 'px-2 py-1 rounded-md bg-gray-200';
 const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
-  const { deleteParty, isSuccessDelete, updateParty } = useParties();
+  const {
+    mutate: deleteParty,
+    isSuccess: isSuccessDelete,
+    isPending: isPendingDelete,
+  } = useDeleteParty();
+  const { mutate: updateParty } = useUpdateParty();
   const { data: party } = useGetPartyDetail(partyId);
+  const { mutate: addFood } = useAddFood(partyId);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -50,6 +60,11 @@ const PartyDetail = ({ partyId }: Props) => {
     return false;
   };
 
+  const handleSubmit = (e: FormEvent, name: string) => {
+    e.preventDefault();
+    addFood({ name });
+  };
+
   const onClickVotingCloses = () =>
     updateParty({ partyId, updated: { isClosed: true } });
 
@@ -58,7 +73,7 @@ const PartyDetail = ({ partyId }: Props) => {
   const makeVisibleVotingForm = () => {
     if (!party.isClosed) {
       if (checkPresident() || (!checkPresident && party.canBeAdded))
-        return <VotingForm partyId={partyId} />;
+        return <VotingForm handleSubmit={handleSubmit} />;
     }
   };
 

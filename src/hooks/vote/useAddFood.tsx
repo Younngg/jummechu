@@ -31,6 +31,8 @@ const useAddFood = (partyId: string) => {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ['parties', partyId] }),
   });
 };
 

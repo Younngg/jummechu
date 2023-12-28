@@ -2,24 +2,19 @@ import { useAddFood } from '@/hooks/vote';
 import { FormEvent, useState } from 'react';
 
 type Props = {
-  partyId: string;
+  handleSubmit: (e: FormEvent, name: string) => void;
 };
 
-const VotingForm = ({ partyId }: Props) => {
-  const { mutate: addFood } = useAddFood(partyId);
-
+const VotingForm = ({ handleSubmit }: Props) => {
   const [name, setName] = useState('');
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    addFood({ name });
-    setName('');
-  };
 
   return (
     <form
       className='flex items-center justify-center gap-1'
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        handleSubmit(e, name);
+        setName('');
+      }}
     >
       <input
         placeholder='항목 이름'
