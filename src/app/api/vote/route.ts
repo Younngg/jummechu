@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { cancleVoteForFood, voteForFood } from '@/service/sanity/party';
-import { authOptions } from '../auth/[...nextauth]/route';
+import authOptions from '../auth/[...nextauth]/options';
 
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
