@@ -1,4 +1,4 @@
-import useVote from '@/hooks/vote';
+import { useAddFood } from '@/hooks/vote';
 import { FormEvent, useState } from 'react';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
 };
 
 const VotingForm = ({ partyId }: Props) => {
-  const { addFood } = useVote(partyId);
+  const { mutate: addFood } = useAddFood(partyId);
 
   const [name, setName] = useState('');
 

@@ -1,8 +1,8 @@
-import useVote from '@/hooks/vote';
 import { Food } from '@/types/party';
 import { useSession } from 'next-auth/react';
 import ToggleButton from './ui/ToggleButton';
 import DefaultButton from './ui/DefaultButton';
+import { useDeleteFood, useSetVote } from '@/hooks/vote';
 
 type Props = {
   food: Food;
@@ -15,7 +15,8 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { setVote, deleteFood } = useVote(partyId);
+  const { mutate: deleteFood } = useDeleteFood(partyId);
+  const { mutate: setVote } = useSetVote(partyId);
 
   const voted = user
     ? food.voters.some((voter) => voter.id === user.id)

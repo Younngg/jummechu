@@ -3,10 +3,9 @@
 import { useSession } from 'next-auth/react';
 import Voting from './Voting';
 import VotingForm from './VotingForm';
-import useVote from '@/hooks/vote';
 import useParties from '@/hooks/parties';
 import { useEffect, useState } from 'react';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import ModalPortal from './ui/ModalPortal';
 import Modal from './ui/Modal';
@@ -15,6 +14,7 @@ import DefaultButton from './ui/DefaultButton';
 import SearchMap from './Map/SearchMap';
 import { Food } from '@/types/party';
 import ShareBar from './ShareBar';
+import { useGetPartyDetail } from '@/hooks/party';
 
 type Props = {
   partyId: string;
@@ -26,7 +26,7 @@ const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
   const { deleteParty, isSuccessDelete, updateParty } = useParties();
-  const { party } = useVote(partyId);
+  const { data: party } = useGetPartyDetail(partyId);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,6 +36,10 @@ const PartyDetail = ({ partyId }: Props) => {
 
   if (!party) {
     return <></>;
+  }
+
+  if (!party) {
+    notFound();
   }
 
   const checkPresident = () => {

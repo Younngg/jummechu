@@ -1,17 +1,16 @@
 'use client';
 
 import useParties from '@/hooks/parties';
-import useVote from '@/hooks/vote';
+import { useGetPartyDetail } from '@/hooks/party';
 import { redirect } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
-import DefaultButton from './ui/DefaultButton';
 
 type Props = {
   partyId?: string;
 };
 
 const PartyForm = ({ partyId }: Props) => {
-  const { party } = useVote(partyId ?? '');
+  const { data: party } = useGetPartyDetail(partyId ?? '');
   const { createParty, newParty, updateParty, isSuccessUpdate } = useParties();
 
   const [name, setName] = useState(party ? party.name : '');

@@ -3,8 +3,6 @@
 import { Food, PartyDetail } from '@/types/party';
 import { useSession } from 'next-auth/react';
 import FoodCard from './FoodCard';
-import VoterList from './VoterList';
-import { User } from '@/types/user';
 
 type Props = {
   party: PartyDetail;
