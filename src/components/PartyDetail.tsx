@@ -20,6 +20,7 @@ import {
 } from '@/hooks/party';
 import { useAddFood } from '@/hooks/vote';
 import LoadingDots from './ui/LoadingDots';
+import PartyActionBar from './PartyActionBar';
 type Props = {
   partyId: string;
 };
@@ -29,16 +30,14 @@ const BUTTON_STYLE = 'px-2 py-1 rounded-md bg-gray-200';
 const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
+  const [openModal, setOpenModal] = useState(false);
   const {
     mutate: deleteParty,
     isSuccess: isSuccessDelete,
     isPending: isPendingDelete,
   } = useDeleteParty();
-  const { mutate: updateParty } = useUpdateParty();
   const { data: party } = useGetPartyDetail(partyId);
   const { mutate: addFood, isPending: isPendingAddFood } = useAddFood(partyId);
-
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (isSuccessDelete) redirect('/');
@@ -52,6 +51,11 @@ const PartyDetail = ({ partyId }: Props) => {
     notFound();
   }
 
+  const handleSubmitFood = (e: FormEvent, name: string) => {
+    e.preventDefault();
+    addFood({ name });
+  };
+
   const checkPresident = () => {
     const { createdBy } = party;
     if (user) {
@@ -60,22 +64,7 @@ const PartyDetail = ({ partyId }: Props) => {
     return false;
   };
 
-  const handleSubmit = (e: FormEvent, name: string) => {
-    e.preventDefault();
-    addFood({ name });
-  };
-
-  const onClickVotingCloses = () =>
-    updateParty({ partyId, updated: { isClosed: true } });
-
   const onClickDeleteParty = () => deleteParty(party.id);
-
-  const makeVisibleVotingForm = () => {
-    if (!party.isClosed) {
-      if (checkPresident() || (!checkPresident && party.canBeAdded))
-        return <VotingForm handleSubmit={handleSubmit} />;
-    }
-  };
 
   const mostVotedFood = party.foods.reduce(
     (prev, cur) => {
@@ -102,28 +91,12 @@ const PartyDetail = ({ partyId }: Props) => {
           mostVotedFood={mostVotedFood}
           isPendingAddFood={isPendingAddFood}
         />
-        {makeVisibleVotingForm()}
-        <div className='flex justify-center gap-2'>
-          {checkPresident() && !party.isClosed ? (
-            <DefaultButton
-              color='gray'
-              onClick={onClickVotingCloses}
-              text='투표 마감'
-            />
-          ) : undefined}
-          {checkPresident() && (
-            <>
-              <Link className={BUTTON_STYLE} href={`/party/update/${partyId}`}>
-                수정
-              </Link>
-              <DefaultButton
-                color='gray'
-                onClick={() => setOpenModal(true)}
-                text='삭제'
-              />
-            </>
-          )}
-        </div>
+        <PartyActionBar
+          party={party}
+          isPresident={checkPresident()}
+          handleSubmit={handleSubmitFood}
+          openModal={() => setOpenModal(true)}
+        />
       </div>
       {party.isClosed && <SearchMap foodName={mostVotedFood.name} />}
       {openModal && (
