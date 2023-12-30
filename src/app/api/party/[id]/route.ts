@@ -8,13 +8,6 @@ type Context = {
 };
 
 export async function GET(_: NextRequest, context: Context) {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
-
-  if (!user) {
-    return new Response('Authentication Error', { status: 401 });
-  }
-
   return getParty(context.params.id).then((res) => NextResponse.json(res));
 }
 
