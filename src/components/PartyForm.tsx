@@ -7,6 +7,7 @@ import {
 } from '@/hooks/party';
 import { redirect } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
+import LoadingDots from './ui/LoadingDots';
 
 type Props = {
   partyId?: string;
@@ -14,8 +15,16 @@ type Props = {
 
 const PartyForm = ({ partyId }: Props) => {
   const { data: party } = useGetPartyDetail(partyId ?? '');
-  const { mutate: createParty, data: newParty } = useCreateParty();
-  const { mutate: updateParty, isSuccess: isSuccessUpdate } = useUpdateParty();
+  const {
+    mutate: createParty,
+    data: newParty,
+    isPending: isPendingCreate,
+  } = useCreateParty();
+  const {
+    mutate: updateParty,
+    isSuccess: isSuccessUpdate,
+    isPending: isPendingUpdate,
+  } = useUpdateParty();
 
   const [name, setName] = useState(party ? party.name : '');
   const [isAnonymous, setIsAnonymous] = useState(
@@ -82,10 +91,16 @@ const PartyForm = ({ partyId }: Props) => {
         </div>
       </div>
       <button
-        className='px-2 py-1 bg-green-200 rounded-md'
+        className='px-2 py-1 bg-green-200 rounded-md relative'
         onClick={handleSubmit}
       >
         {partyId ? '수정' : '추가'}
+
+        {(isPendingCreate || isPendingUpdate) && (
+          <span className='absolute inset-0 bg-black/50 rounded-md'>
+            <LoadingDots />
+          </span>
+        )}
       </button>
     </form>
   );

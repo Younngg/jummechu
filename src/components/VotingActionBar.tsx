@@ -12,7 +12,7 @@ type Props = {
   canBeDeleted: boolean;
 };
 
-const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
+const VotingActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -52,4 +52,4 @@ const ActionBar = ({ food, partyId, disabled, canBeDeleted }: Props) => {
   );
 };
 
-export default ActionBar;
+export default VotingActionBar;

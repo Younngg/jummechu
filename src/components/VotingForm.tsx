@@ -1,4 +1,3 @@
-import { useAddFood } from '@/hooks/vote';
 import { FormEvent, useState } from 'react';
 
 type Props = {

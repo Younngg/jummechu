@@ -1,6 +1,5 @@
 import { Food, PartyDetail } from '@/types/party';
-import { useSession } from 'next-auth/react';
-import ActionBar from './ActionBar';
+import VotingActionBar from './VotingActionBar';
 import ToggleButton from './ui/ToggleButton';
 import { useState } from 'react';
 import UpIcon from './ui/icons/UpIcon';
@@ -48,7 +47,7 @@ const FoodCard = ({
           )}
         </div>
         {!isClosed && (
-          <ActionBar
+          <VotingActionBar
             food={food}
             partyId={partyId}
             disabled={disabled}
