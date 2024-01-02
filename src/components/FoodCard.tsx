@@ -6,6 +6,7 @@ import UpIcon from './ui/icons/UpIcon';
 import DownIcon from './ui/icons/DownIcon';
 import AccordionPortal from './ui/AccordionPortal';
 import VoterList from './VoterList';
+import { useSession } from 'next-auth/react';
 
 type Props = {
   food: Food;
@@ -22,6 +23,9 @@ const FoodCard = ({
   canBeDeleted,
   mostVotedFood,
 }: Props) => {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const [isOpenVoterList, setIsOpenVoterList] = useState(false);
 
   return (
@@ -46,7 +50,7 @@ const FoodCard = ({
             />
           )}
         </div>
-        {!isClosed && (
+        {!isClosed && user && (
           <VotingActionBar
             food={food}
             partyId={partyId}
