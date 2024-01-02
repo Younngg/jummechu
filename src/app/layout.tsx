@@ -33,7 +33,7 @@ export default function RootLayout({
         </AuthContext>
         <div id='modal' />
         <Script
-          src='//dapi.kakao.com/v2/maps/sdk.js?appkey=39eb6092d981cc08bd8e358203a356ce&libraries=services,clusterer&autoload=false'
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_CLIENT_ID}&libraries=services,clusterer&autoload=false`}
           strategy='beforeInteractive'
         />
         <Script
