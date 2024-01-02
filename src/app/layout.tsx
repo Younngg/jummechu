@@ -20,14 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang='ko'>
-      <body className={sans.className}>
+      <body className={`${sans.className} max-w-full overflow-x-hidden`}>
         <AuthContext>
           <header className='border-b'>
-            <div className='max-w-screen-md mx-auto'>
+            <div className='md:max-w-screen-md mx-auto'>
               <Header />
             </div>
           </header>
-          <main className='max-w-screen-md mx-auto'>
+          <main className='md:max-w-screen-md mx-auto'>
             <QueryClientContext>{children}</QueryClientContext>
           </main>
         </AuthContext>

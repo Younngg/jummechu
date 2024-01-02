@@ -74,7 +74,7 @@ const PartyDetail = ({ partyId }: Props) => {
   );
 
   return (
-    <section className='px-3 py-6'>
+    <>
       <div className='text-center'>
         <h2 className='text-2xl font-bold'>{party.name}</h2>
         <div>
@@ -114,7 +114,7 @@ const PartyDetail = ({ partyId }: Props) => {
           </Modal>
         </ModalPortal>
       )}
-    </section>
+    </>
   );
 };
 
