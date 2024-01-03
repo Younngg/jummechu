@@ -12,6 +12,7 @@ export type SimpleParty = {
   name: string;
   createdBy: SimpleUser;
   isClosed: boolean;
+  createdAt: string;
 };
 
 export type PartyDetail = SimpleParty & {

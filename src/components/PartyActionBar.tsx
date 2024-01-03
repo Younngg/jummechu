@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import DefaultButton from './ui/DefaultButton';
 import { PartyDetail } from '@/types/party';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
 import { useUpdateParty } from '@/hooks/party';
 import VotingForm from './VotingForm';
@@ -21,13 +21,16 @@ const PartyActionBar = ({
   handleSubmit,
   openModal,
 }: Props) => {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const { mutate: updateParty } = useUpdateParty();
 
   const onClickVotingCloses = () =>
     updateParty({ partyId: party.id, updated: { isClosed: true } });
 
   const makeVisibleVotingForm = () => {
-    if (!party.isClosed) {
+    if (!party.isClosed && user) {
       if (isPresident || (!isPresident && party.canBeAdded))
         return <VotingForm handleSubmit={handleSubmit} />;
     }

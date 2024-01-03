@@ -20,20 +20,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang='ko'>
-      <body className={sans.className}>
+      <body className={`${sans.className} max-w-full overflow-x-hidden`}>
         <AuthContext>
           <header className='border-b'>
-            <div className='max-w-screen-md mx-auto'>
+            <div className='md:max-w-screen-md mx-auto'>
               <Header />
             </div>
           </header>
-          <main className='max-w-screen-md mx-auto'>
+          <main className='md:max-w-screen-md mx-auto'>
             <QueryClientContext>{children}</QueryClientContext>
           </main>
         </AuthContext>
         <div id='modal' />
         <Script
-          src='//dapi.kakao.com/v2/maps/sdk.js?appkey=39eb6092d981cc08bd8e358203a356ce&libraries=services,clusterer&autoload=false'
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_CLIENT_ID}&libraries=services,clusterer&autoload=false`}
           strategy='beforeInteractive'
         />
         <Script

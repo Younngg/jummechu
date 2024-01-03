@@ -4,7 +4,8 @@ import { client } from './sanity';
 const simpleProjection = `
   name,
   "id":_id,
-  "updatedAt":_updatedAt
+  "updatedAt":_updatedAt,
+  "createdAt":_createdAt
 `;
 
 export const deleteFood = async (foodId: string, partyId: string) => {

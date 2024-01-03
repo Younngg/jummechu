@@ -4,9 +4,9 @@ type Props = { params: { id: string } };
 
 const PartyDetailPage = ({ params: { id } }: Props) => {
   return (
-    <div>
+    <section className='px-3 py-6'>
       <PartyDetail partyId={id} />
-    </div>
+    </section>
   );
 };
 

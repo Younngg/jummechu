@@ -9,17 +9,18 @@ type Props = {
 
 const LogIn = ({ providers, callbackUrl }: Props) => {
   return (
-    <>
+    <ul className='flex flex-col gap-3'>
       {Object.values(providers).map(({ name, id }) => (
-        <button
-          key={id}
-          className='btn btn-outline btn-primary'
-          onClick={() => signIn(id, { callbackUrl })}
-        >
-          {name}으로 로그인
-        </button>
+        <li key={id}>
+          <button
+            className='btn btn-outline btn-primary w-48'
+            onClick={() => signIn(id, { callbackUrl })}
+          >
+            {name} 로그인
+          </button>
+        </li>
       ))}
-    </>
+    </ul>
   );
 };
 

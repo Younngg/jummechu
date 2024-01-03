@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Voting from './Voting';
 import VotingForm from './VotingForm';
 import { FormEvent, useEffect, useState } from 'react';
@@ -24,8 +24,6 @@ import PartyActionBar from './PartyActionBar';
 type Props = {
   partyId: string;
 };
-
-const BUTTON_STYLE = 'px-2 py-1 rounded-md bg-gray-200';
 
 const PartyDetail = ({ partyId }: Props) => {
   const { data: session } = useSession();
@@ -74,7 +72,7 @@ const PartyDetail = ({ partyId }: Props) => {
   );
 
   return (
-    <section className='px-3 py-6'>
+    <>
       <div className='text-center'>
         <h2 className='text-2xl font-bold'>{party.name}</h2>
         <div>
@@ -84,7 +82,7 @@ const PartyDetail = ({ partyId }: Props) => {
           <p className='text-sm text-gray-600 mt-1'>익명 투표</p>
         )}
       </div>
-      <div className='mt-8 flex flex-col gap-3'>
+      <div className='mt-8 flex flex-col gap-3 items-center'>
         <Voting
           party={party}
           canBeDeleted={checkPresident()}
@@ -97,6 +95,11 @@ const PartyDetail = ({ partyId }: Props) => {
           handleSubmit={handleSubmitFood}
           openModal={() => setOpenModal(true)}
         />
+        {!user && (
+          <button onClick={() => signIn()} className='btn'>
+            로그인 하고 투표하기
+          </button>
+        )}
       </div>
       {party.isClosed && <SearchMap foodName={mostVotedFood.name} />}
       {openModal && (
@@ -114,7 +117,7 @@ const PartyDetail = ({ partyId }: Props) => {
           </Modal>
         </ModalPortal>
       )}
-    </section>
+    </>
   );
 };
 

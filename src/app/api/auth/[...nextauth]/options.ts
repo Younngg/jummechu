@@ -1,4 +1,5 @@
 import GoogleProvider from 'next-auth/providers/google';
+import KakaoProvider from 'next-auth/providers/kakao';
 import { NextAuthOptions } from 'next-auth';
 import { addUser } from '@/service/sanity/user';
 
@@ -7,6 +8,10 @@ const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || '',
       clientSecret: process.env.GOOGLE_OAUTH_SECRET || '',
+    }),
+    KakaoProvider({
+      clientId: process.env.KAKAO_CLIENT_ID || '',
+      clientSecret: process.env.KAKAO_CLIENT_SECRET || '',
     }),
   ],
   pages: {
@@ -30,7 +35,7 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async signIn({ user: { id, name, image, email } }) {
-      if (!email) {
+      if (!id) {
         return false;
       }
 
@@ -38,7 +43,7 @@ const authOptions: NextAuthOptions = {
         id,
         name: name || '',
         image: image || '',
-        email,
+        email: email || id || '',
       });
 
       return true;
